@@ -1,4 +1,4 @@
-### 保持对Go的enthusiasm
+### 保持对Go的enthusiasm :bulb:
 
 引言：
 关于取名，为什么取这么一个俗气的名字呢，因为我是51自学网（手）著（动）名（滑）学（稽）员
@@ -41,5 +41,7 @@ Doing
 
 ToDo
 
+
+:whale2: :whale2: :whale2: 
 
 
