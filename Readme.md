@@ -17,3 +17,20 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 > 2. [GCTT翻译小组](https://studygolang.com/gctt)
 > 3. [gopher academy](https://blog.gopheracademy.com/)
 > 4. [Golang Weekly News](https://golangweekly.com/issues)
+
+
+- [ ] 不勾选
+- [x] 勾选
+
+
+Done
+
+- [x] 1.[函数是第一公民](https://studygolang.com/articles/12789)
+
+Doing 
+- [x] 1.[函数是第一公民](https://studygolang.com/articles/12789)
+
+ToDo
+
+
+
