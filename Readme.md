@@ -19,13 +19,22 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 > 4. [Golang Weekly News](https://golangweekly.com/issues)
 
 
+学习分为几大块:
+
+
+1 Go语言并发模型  | 2 GC垃圾回收 |  3 Goroutine调度 | 4 Go semantics | 5 Go编码常犯错误 |  6 Go sdk 源码探究和学习 
+:-----------: | :-----------: | :-----------: | :-----------: | :-----------: | :-----------: 
+
+  
+
 - [ ] 不勾选
 - [x] 勾选
 
 
+
 Done
 
-- [x] 1.[函数是第一公民](https://studygolang.com/articles/12789)
+- [x] 1.[函数是第一公民](https://studygolang.com/articles/12789) FirstClassFunction.go tag: semantics
 
 Doing 
 - [x] 1.[函数是第一公民](https://studygolang.com/articles/12789)

@@ -1,4 +1,4 @@
-package GoWind
+package semantics
 
 import "fmt"
 
