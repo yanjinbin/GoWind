@@ -35,6 +35,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 Done
 
 - [x] 1.[函数是第一公民](https://studygolang.com/articles/12789) FirstClassFunction.go tag: semantics
+有下列知识点 1. 头等函数作为变量的几种用法 2 高阶函数概念 3 闭包(closure)的变量捕获 外围变量 4 高阶函数在web业务路由Handler功能 5 range和闭包编码常犯的trick 6 Go是值传递,类型分为引用类型(切片 map channel)和值类型(数组)
 
 Doing 
 - [x] 1.[函数是第一公民](https://studygolang.com/articles/12789)
