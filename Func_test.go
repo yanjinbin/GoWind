@@ -31,3 +31,11 @@ func TestStr(t *testing.T) {
 	// 出一篇小文 你真的用对了len内置函数嘛?
 	sdk.CalLen("Señor")
 }
+
+func TestPointer(t *testing.T) {
+	semantics.PointerType()
+}
+
+func TestMethod(t *testing.T) {
+	semantics.Method()
+}
