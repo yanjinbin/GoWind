@@ -66,7 +66,6 @@ func TestReflect(t *testing.T) {
 		CustomerId: 56,
 	}
 	semantics.CreateQuery(o)
-
 	e := semantics.Employee{
 		12,
 		"Naveen",
@@ -78,5 +77,8 @@ func TestReflect(t *testing.T) {
 	semantics.CreateQuery(e)
 	i := 90
 	semantics.CreateQuery(i)
+}
 
+func TestError(t *testing.T) {
+	semantics.Err()
 }

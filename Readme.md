@@ -56,8 +56,8 @@ Golang的组合和多态玩法,没有继承特性
 
 - [x] 9 [Go反射](https://studygolang.com/articles/13178) 什么是反射  反射能获取变量什么信息 类型 类名 struct成员变量各种属性 ,Go反射常用于 Go sql语句组装
 
+- [x] 10 [error 判断3种方法和自定义error来优雅处理err](https://studygolang.com/articles/12784,https://studygolang.com/articles/12724)
 #### Doing
-- [ ] 7 go 错误处理
 - [ ] 8 
 - [ ] 9 Go读写文件 https://studygolang.com/articles/14669 https://studygolang.com/articles/19475
 - [ ] 10 Go select 关键字 https://studygolang.com/articles/12522
