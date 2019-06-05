@@ -50,7 +50,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 - [x] 6  [组合](https://studygolang.com/articles/12680) [多态](https://studygolang.com/articles/12681)
 Golang的组合和多态玩法,没有继承特性  
 #### Doing 
-
+- [x] 7 [defer](https://studygolang.com/articles/12719) 1 defer用法 入栈, defer 实参的值在函数执行入栈时传入,而非方法正常体结束玩时候在调用 2 入栈遵循Last In First Out 3 defer在sync包 waitgroup的使用
 - [ ] 
 - [ ] 
 - [ ] 6 defer panic recover https://studygolang.com/articles/12719 https://studygolang.com/articles/12785

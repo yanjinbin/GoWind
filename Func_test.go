@@ -51,3 +51,7 @@ func TestPolymorphismComposite(t *testing.T) {
 	fmt.Println("多态")
 	semantics.Polymorphism()
 }
+
+func TestDefer(t *testing.T) {
+	semantics.Defer()
+}
