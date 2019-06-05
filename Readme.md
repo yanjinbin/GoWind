@@ -54,9 +54,11 @@ Golang的组合和多态玩法,没有继承特性
 
 - [x] 8 [panic recover 实践](https://studygolang.com/articles/12785)  总结:函数/方法 发生panic后,不会再执行正常流程,执行完毕所有defer出栈之后,程序控制会转移给调用方,直到当前协程的所有函数退出,程序打印处panic 堆栈信息.可以用recover恢复同一个协程的panic,但是要注意此时的panic信息,要用debug.PrintStack方法打印.
 
+- [x] 9 [Go反射](https://studygolang.com/articles/13178) 什么是反射  反射能获取变量什么信息 类型 类名 struct成员变量各种属性 ,Go反射常用于 Go sql语句组装
+
 #### Doing
 - [ ] 7 go 错误处理
-- [ ] 8 Go反射 https://studygolang.com/articles/13178
+- [ ] 8 
 - [ ] 9 Go读写文件 https://studygolang.com/articles/14669 https://studygolang.com/articles/19475
 - [ ] 10 Go select 关键字 https://studygolang.com/articles/12522
 - [ ] 11 Go channel https://studygolang.com/articles/12402

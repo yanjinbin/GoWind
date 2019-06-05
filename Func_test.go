@@ -59,3 +59,24 @@ func TestDefer(t *testing.T) {
 func TestPanicRecover(t *testing.T) {
 	semantics.PanicRecover()
 }
+
+func TestReflect(t *testing.T) {
+	o := semantics.Order{
+		OrdId:      456,
+		CustomerId: 56,
+	}
+	semantics.CreateQuery(o)
+
+	e := semantics.Employee{
+		12,
+		"Naveen",
+		565,
+		"Coimbatore",
+		90000,
+		"India",
+	}
+	semantics.CreateQuery(e)
+	i := 90
+	semantics.CreateQuery(i)
+
+}

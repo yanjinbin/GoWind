@@ -2,23 +2,18 @@ package semantics
 
 import "fmt"
 
-type Employee struct {
-	name string
-	age  int
-}
-
 /*
 使用值接收器的方法。
 */
 func (e Employee) changeName(newName string) {
-	e.name = newName
+	e.Name = newName
 }
 
 /*
 使用指针接收器的方法。
 */
-func (e *Employee) changeAge(newAge int) {
-	e.age = newAge
+func (e *Employee) changeAge(salary int) {
+	e.Salary = salary
 }
 
 func Method() {
@@ -27,16 +22,16 @@ func Method() {
 	// 	Should I define methods on values or pointers? ¶
 
 	e := &Employee{
-		name: "Mark Andrew",
-		age:  50,
+		Name: "Mark Andrew",
+		Age:  50,
 	}
-	fmt.Printf("Employee name before change: %s", e.name)
+	fmt.Printf("Employee name before change: %s", e.Name)
 	e.changeName("Michael Andrew")
-	fmt.Printf("\nEmployee name after change: %s", e.name)
+	fmt.Printf("\nEmployee name after change: %s", e.Name)
 
-	fmt.Printf("\n\nEmployee age before change: %d", e.age)
+	fmt.Printf("\n\nEmployee age before change: %d", e.Age)
 	(e).changeAge(51)
-	fmt.Printf("\nEmployee age after change: %d\n", e.age)
+	fmt.Printf("\nEmployee age after change: %d\n", e.Age)
 
 	fmt.Println("匿名字段的方法:属于结构体的匿名字段的方法可以被直接调用，就好像这些方法是属于定义了匿名字段的结构体一样。")
 	p := person{
