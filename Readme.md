@@ -49,12 +49,13 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 
 - [x] 6  [组合](https://studygolang.com/articles/12680) [多态](https://studygolang.com/articles/12681)
 Golang的组合和多态玩法,没有继承特性  
-#### Doing 
-- [x] 7 [defer](https://studygolang.com/articles/12719) 1 defer用法 入栈, defer 实参的值在函数执行入栈时传入,而非方法正常体结束玩时候在调用 2 入栈遵循Last In First Out 3 defer在sync包 waitgroup的使用
-- [ ] 
-- [ ] 
-- [ ] 6 defer panic recover https://studygolang.com/articles/12719 https://studygolang.com/articles/12785
-- [ ] 7 go 错误处理 https://github.com/golang/go/wiki/LearnErrorHandling  https://studygolang.com/articles/12724 https://studygolang.com/articles/12784
+ 
+- [x] 7 [defer](https://studygolang.com/articles/12719) 1 defer用法 入栈, defer 实参的值在函数执行入栈时传入,而非方法正常体结束玩时候在调用(也就是说不在出栈时候调用) 2 入栈遵循Last In First Out 3 defer在sync包 waitgroup的使用
+
+- [x] 8 [panic recover 实践](https://studygolang.com/articles/12785)  总结:函数/方法 发生panic后,不会再执行正常流程,执行完毕所有defer出栈之后,程序控制会转移给调用方,直到当前协程的所有函数退出,程序打印处panic 堆栈信息.可以用recover恢复同一个协程的panic,但是要注意此时的panic信息,要用debug.PrintStack方法打印.
+
+#### Doing
+- [ ] 7 go 错误处理
 - [ ] 8 Go反射 https://studygolang.com/articles/13178
 - [ ] 9 Go读写文件 https://studygolang.com/articles/14669 https://studygolang.com/articles/19475
 - [ ] 10 Go select 关键字 https://studygolang.com/articles/12522

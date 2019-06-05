@@ -55,3 +55,7 @@ func TestPolymorphismComposite(t *testing.T) {
 func TestDefer(t *testing.T) {
 	semantics.Defer()
 }
+
+func TestPanicRecover(t *testing.T) {
+	semantics.PanicRecover()
+}
