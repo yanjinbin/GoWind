@@ -39,3 +39,7 @@ func TestPointer(t *testing.T) {
 func TestMethod(t *testing.T) {
 	semantics.Method()
 }
+
+func TestInterface(t *testing.T) {
+	semantics.SumExpense()
+}
