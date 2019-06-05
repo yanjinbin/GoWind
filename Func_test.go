@@ -43,3 +43,11 @@ func TestMethod(t *testing.T) {
 func TestInterface(t *testing.T) {
 	semantics.SumExpense()
 }
+
+func TestPolymorphismComposite(t *testing.T) {
+	// 组合  多态
+	fmt.Println("组合")
+	semantics.Composite()
+	fmt.Println("多态")
+	semantics.Polymorphism()
+}
