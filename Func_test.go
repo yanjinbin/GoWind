@@ -1,4 +1,4 @@
-package GoWind
+package main
 
 import (
 	"GoWind/sdk"
