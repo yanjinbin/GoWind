@@ -30,7 +30,7 @@ func CircleArea(radius float64) (float64, error) {
 	if radius < 0 {
 		// 明显自定义的错误 更加灵活表达错误信息
 		// errorf := fmt.Errorf("radius %v is negative ", radius)
-		return 0, &AreaError{"radius is negative", radius, nil, nil}
+		return 0, &AreaError{"radius is negative", radius, 0, 0}
 	}
 	return math.Pi * radius * radius, nil
 }

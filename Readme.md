@@ -56,15 +56,38 @@ Golang的组合和多态玩法,没有继承特性
 
 - [x] 9 [Go反射](https://studygolang.com/articles/13178) 什么是反射  反射能获取变量什么信息 类型 类名 struct成员变量各种属性 ,Go反射常用于 Go sql语句组装
 
-- [x] 10 [error 判断3种方法和自定义error来优雅处理err](https://studygolang.com/articles/12784,https://studygolang.com/articles/12724)
+- [x] 10 [error 判断3种方法和自定义error来优雅处理err](https://studygolang.com/articles/12784,https://studygolang.com/articles/12724) https://github.com/golang/go/wiki/LearnErrorHandling
+
+- [x] 11 [文件读取](https://studygolang.com/articles/14669) 读取整个文件ioutil 分块读取bus read 逐行读取  buf scanner [文件写入](https://studygolang.com/articles/19475) 并发写
 #### Doing
-- [ ] 8 
-- [ ] 9 Go读写文件 https://studygolang.com/articles/14669 https://studygolang.com/articles/19475
+
+- [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
+- [ ] 9 Go读写文件 
 - [ ] 10 Go select 关键字 https://studygolang.com/articles/12522
 - [ ] 11 Go channel https://studygolang.com/articles/12402
 - [ ] 12 Go mutex 和 WaitGroup 用法
 - [ ] 13 Go mutex 和 WaitGroup 源码分析
 - [ ] 14 GO Ratelimiter https://github.com/golang/go/wiki/RateLimiting
+- [ ] 15 go code review https://github.com/golang/go/wiki/CodeReviewComments
+- [ ] 16 为什么不支持generic http://bit.ly/2wG5zu8
+- [ ] 优秀 article https://github.com/golang/go/wiki/Articles
+https://github.com/golang/go/wiki/LearnServerProgramming 服务端编程  如何写中间件
+
+https://github.com/golang/go/wiki/Articles#concurrency--channels  concurrent 和 channel处理
+
+https://github.com/golang/go/wiki/CommonMistakes
+
+https://github.com/golang/go/wiki/SignalHandling
+https://github.com/golang/go/wiki/SimultaneousAssignment
+https://github.com/golang/go/wiki/SliceTricks
+https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff
+https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc
+
+go database sql http://go-database-sql.org/
+
+好blog:https://github.com/golang/go/wiki/Blogs
+
+context https://studygolang.com/articles/13866
 
 ToDo
 
