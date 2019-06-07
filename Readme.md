@@ -59,6 +59,10 @@ Golang的组合和多态玩法,没有继承特性
 - [x] 10 [error 判断3种方法和自定义error来优雅处理err](https://studygolang.com/articles/12784,https://studygolang.com/articles/12724) https://github.com/golang/go/wiki/LearnErrorHandling
 
 - [x] 11 [文件读取](https://studygolang.com/articles/14669) 读取整个文件ioutil 分块读取bus read 逐行读取  buf scanner [文件写入](https://studygolang.com/articles/19475) 并发写
+
+- [x] 12  [Go FAQ](https://golang.org/doc/faq) 读后感: new make区别 一个allocate mem，一个还要继续 initialize ,struct type 不能和nil 做compare 操作，array是值类型。但是slice map channel都是引用类型，不过要强调一点是go都是按值传递 you see is what you want, 另外就是method receiver, where value reciever function, the same is pointer receiver，opposite not work! 需要说明的，如果value receiver 用在pointer receiver上，Go 会自动给她加上&。其他就是Go 语言设计思想了 goroutine 取代thread csp 模型, mutex sync包.取消泛型,同样需要GC。
+Go memory model 另外叙述。
+
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
 - [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
@@ -118,16 +122,10 @@ https://blog.golang.org/defer-panic-and-recover
 Go Concurrency Patterns: Timing out, moving on
 https://blog.golang.org/go-concurrency-patterns-timing-out-and
 
-https://blog.golang.org/first-class-functions-in-go-and-new-go
-
-"First Class Functions in Go"
-https://blog.golang.org/first-class-functions-in-go-and-new-go
 
 Getting to Go: The Journey of Go's Garbage Collector
 https://blog.golang.org/ismmkeynote
 
-Frequently Asked Questions (FAQ)
-https://golang.org/doc/faq#different_method_sets
 
 Go Concurrency Patterns: Context
 https://blog.golang.org/context
@@ -239,10 +237,6 @@ https://github.com/golang/go/wiki/LearnConcurrency
 ----
 GO语言编码规范
 https://goo.gl/uwQkBy
-
-
----
-go 的在线IDE https://play.golang.org/
 
 ---
 https://github.com/golang/go/wiki/MutexOrChannel
