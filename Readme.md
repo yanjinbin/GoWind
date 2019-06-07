@@ -60,7 +60,7 @@ Golang的组合和多态玩法,没有继承特性
 
 - [x] 11 [文件读取](https://studygolang.com/articles/14669) 读取整个文件ioutil 分块读取bus read 逐行读取  buf scanner [文件写入](https://studygolang.com/articles/19475) 并发写
 #### Doing
-
+- [ ] Go语言机制 https://studygolang.com/subject/74
 - [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
 - [ ] 9 Go读写文件 
 - [ ] 10 Go select 关键字 https://studygolang.com/articles/12522
@@ -91,6 +91,219 @@ context https://studygolang.com/articles/13866
 
 ToDo
 
+//todo
+Effective go 学习链接
+https://golang.org/doc/effective_go.html
+
+
+The Go Memory Model
+https://golang.org/ref/mem
+
+Advanced Go Concurrency Patterns
+https://blog.golang.org/advanced-go-concurrency-patterns
+
+Introducing the Go Race Detector
+https://blog.golang.org/race-detector
+
+Share Memory By Communicating
+https://blog.golang.org/share-memory-by-communicating
+https://golang.org/doc/codewalk/sharemem/
+
+Go Concurrency Patterns: Pipelines and cancellation
+https://blog.golang.org/pipelines
+
+Defer, Panic, and Recover
+https://blog.golang.org/defer-panic-and-recover
+
+Go Concurrency Patterns: Timing out, moving on
+https://blog.golang.org/go-concurrency-patterns-timing-out-and
+
+https://blog.golang.org/first-class-functions-in-go-and-new-go
+
+"First Class Functions in Go"
+https://blog.golang.org/first-class-functions-in-go-and-new-go
+
+Getting to Go: The Journey of Go's Garbage Collector
+https://blog.golang.org/ismmkeynote
+
+Frequently Asked Questions (FAQ)
+https://golang.org/doc/faq#different_method_sets
+
+Go Concurrency Patterns: Context
+https://blog.golang.org/context
+
+https://blog.golang.org/index
+
+Generating code
+https://blog.golang.org/generate
+
+Debugging what you deploy in Go 1.12
+https://blog.golang.org/debugging-what-you-deploy
+
+HTTP/2 Server Push
+https://blog.golang.org/h2push
+
+Introducing HTTP Tracing
+https://blog.golang.org/http-tracing
+
+Go maps in action
+https://blog.golang.org/go-maps-in-action
+
+Go Slices: usage and internals
+https://blog.golang.org/go-slices-usage-and-internals
+
+JSON and Go
+https://blog.golang.org/json-and-go
+
+http://www.itfanr.cc/2017/03/31/learning-golang/
+
+必须的go文章列表
+1 go work steal scheduler https://rakyll.org/scheduler/
+2 https://golang.org/doc/asm
+3 https://studygolang.com/articles/11720#reply2
+4 http://tonybai.com/2014/11/15/how-goroutines-work/
+5 http://tonybai.com/2017/06/23/an-intro-about-goroutine-scheduler/
+6 https://talks.golang.org/2012/waza.slide#6
+7 http://tonybai.com/2015/08/25/go-debugging-profiling-optimization/
+8 http://tonybai.com/2015/08/27/understanding-go-statements-evaluating-order/
+9 http://tonybai.com/2014/11/15/how-goroutines-work/
+10 https://gocn.io/article/28
+11 http://blog.studygolang.com/2012/12/gdb%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/
+12 https://wizardforcel.gitbooks.io/100-gdb-tips/index.html
+http://gopl-zh.b0.upaiyun.com/ch5/ch5-10.html
+
+https://segmentfault.com/a/1190000006233292
+
+https://medium.com/@ggiovani/tcp-socket-implementation-on-golang-c38b67c5d8b
+
+----
+go wiki 
+https://github.com/golang/go/wiki
+
+https://github.com/golang/go/wiki/whygo
+
+https://github.com/golang/go/wiki/SuccessStories
+
+https://github.com/golang/go/wiki/FromXToGo
+
+https://golang.org/doc/effective_go.html
+
+https://golang.org/ref/spec
+
+https://hacpai.com/article/1509519289714
+
+//go学习资料 重点推荐
+https://github.com/golang/go/wiki/Learn
+
+// go ide 
+https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins
+
+// go 语言设计思想
+https://talks.golang.org/2012/splash.article
+
+// go error handle 
+https://github.com/golang/go/wiki/LearnErrorHandling
+
+// common mistakes 
+https://github.com/golang/go/wiki/CommonMistakes
+
+//FAQ
+https://golang.org/doc/faq
+
+https://xiaozhou.net/go-makefile-and-auto-version-2016-06-13.html#more 
+
+
+https://blog.golang.org/strings
+
+https://blog.golang.org/normalization
+
+
+// go json 第三方
+http://www.flysnow.org/2017/11/05/go-auto-choice-json-libs.html
+
+----
+awsome go
+
+https://github.com/avelino/awesome-go
+
+go talk 
+https://github.com/golang/go/wiki/GoTalks
+
+
+----
+advance topic 高级主题
+
+https://github.com/golang/go/wiki/LearnConcurrency
+
+
+----
+GO语言编码规范
+https://goo.gl/uwQkBy
+
+
+---
+go 的在线IDE https://play.golang.org/
+
+---
+https://github.com/golang/go/wiki/MutexOrChannel
+
+---
+defer 5个坑
+
+https://studygolang.com/articles/12061
+
+https://deepzz.com/post/how-to-use-defer-in-golang.html
+
+https://my.oschina.net/henrylee2cn/blog/505535
+
+https://xiaozhou.net/something-about-defer-2014-05-25.html#more
+
+
+-----
+go 标准库文档
+https://studygolang.com/static/pkgdoc/
+
+------
+Go swagger 教程 nextodo
+http://www.do1618.com/archives/851/
+https://gocn.io/article/610
+
+学完这个去头条吹比 Go Concurrent
+https://github.com/golang/go/wiki/LearnConcurrency
+
+https://github.com/golang/go/wiki/LearnErrorHandling
+
+https://github.com/golang/go/wiki/LearnServerProgramming
+
+https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc
+
+https://github.com/golang/go/wiki/CodeTools
+
+https://github.com/golang/go/wiki/Iota
+
+https://github.com/golang/go/wiki/RateLimiting
+
+https://github.com/golang/go/wiki/SliceTricks
+
+https://github.com/golang/go/wiki/SimultaneousAssignment
+
+https://github.com/golang/go/wiki/Timeouts
+
+https://github.com/golang/go/wiki/LockOSThread
+
+https://github.com/golang/go/wiki/MutexOrChannel
+
+https://golang.org/doc/articles/race_detector.html
+
+https://github.com/golang/go/wiki/RaceDetector
+
+https://github.com/golang/go/wiki/InterfaceSlice
+
+https://docs.google.com/document/d/1vrAy9gMpMoS3uaVphB32uVXX4pi-HnNjkMEgyAHX4N4/preview
+
+https://github.com/golang/go/wiki/GoTalks
+
+https://github.com/golang/go/wiki/Articles
 PS: 有些需要编码加深记忆， 有些看看总结。
 :whale2: :whale2: :whale2: 
 
