@@ -119,3 +119,7 @@ func TestSlice(t *testing.T) {
 	}
 	fmt.Println("digits:", digits)
 }
+
+func TestConst(t *testing.T) {
+	semantics.Const()
+}

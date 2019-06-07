@@ -19,6 +19,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 > 2. [GCTT翻译小组](https://studygolang.com/gctt)
 > 3. [gopher academy](https://blog.gopheracademy.com/)
 > 4. [Golang Weekly News](https://golangweekly.com/issues)
+> 5. [golang-nut google group](https://groups.google.com/forum/#!forum/golang-nuts)
 
 
 学习分为几大块:
@@ -69,7 +70,7 @@ Go memory model 另外叙述。
 
 - [x] 14 [Go Slices: usage and internals](https://blog.golang.org/go-slices-usage-and-internals) slice内部meta属性维护指向array关系，slice按需增长,不用担心index out of range。另外，有个possible gotcha 就是 因为slice 指向array. 如果array 过大(通常发生在读取大文件时候)， 这时候可以使用append函数。主要是丢弃array,或者说array-->slice ,slice之间用append合并。
 
-- [x] [JSON and Go](https://blog.golang.org/json-and-go) 讲述 json规范 marshal和unmarshal 以及go如何将复杂的json denote struct type. 
+- [x] 15 [JSON and Go](https://blog.golang.org/json-and-go) 讲述 json规范 marshal和unmarshal 以及go如何将复杂的json denote struct type. 
 encode原则
 >Only data structures that can be represented as valid JSON will be encoded:
 >JSON objects only support strings as keys; to encode a Go map type it must be of the form map[string]T (where T is any Go type supported by the json package).
@@ -78,6 +79,8 @@ encode原则
 >Pointers will be encoded as the values they point to (or 'null' if the pointer is nil).
 decode原则
 > -->tagName--->fieldName--->case insentive filedName
+
+- [x] 16 [constant](https://blog.golang.org/constants) constant is untyped value with default type which is refered by syntax. constant give  freedom ,对于Numeric 可以不用损失精度 比如PI. 另外叙述了如何表示最大值问题.取反操作(而非类型转换)
 
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
@@ -110,11 +113,13 @@ go database sql http://go-database-sql.org/
 context https://studygolang.com/articles/13866
 
 ToDo
+[Testable Examples in Go](https://blog.golang.org/examples)
+
 
  Go泛型话题讨论 http://bit.ly/2wG5zu8
 
 Miscellaneous
-- [x] 1 [GO标准库中文文档](https://studygolang.com/static/pkgdoc/)，这个只能看看库的目录和大致功能，其实没啥用处，直接看英文稳定即可。
+- [x] 1 [GO标准库中文文档](https://studygolang.com/static/pkgdoc/,https://golang.org/pkg/)，这个只能看看库的目录和大致功能，其实没啥用处，直接看英文稳定即可。
 
 - [x] 2 [Go swagger 教程](https://gocn.vip/article/610) Go的swagger 其实代码耦合的挺严重的不好看。
 - [x] 3 [interfaceSlice need explicit type conversion](https://github.com/golang/go/wiki/InterfaceSlice，https://golang.org/doc/faq#convert_slice_of_interface) 
@@ -129,7 +134,13 @@ Miscellaneous
  >If you’re waiting for generic types and functions to be added to the language, my advice is to stop holding your breath and learn to love the language we have today.
  
  >With the 5th point release done, and the 6th on the way in a few months, the possibilities of a new language feature or syntax tweak are remote. The focus from here on out is tools, reliability, and performance.
-
+- [x] [Godoc约定](https://blog.golang.org/godoc-documenting-go-code) Godoc约定 depreciate bug author 第一行展示
+- [x] [组织你的GO代码](https://blog.golang.org/organizing-go-code)
+- [x] [Go debug](https://blog.golang.org/debugging-what-you-deploy) Goland断掉调试背后就是DELVE
+- [x] [Arrays, slices (and strings): The mechanics of 'append'
+](https://blog.golang.org/slices) 这篇和DONE列表里面讲的其实差不多,相当于前面几篇汇总 包括copy append make 内建函数 string 额外用法
+- [x] [Go data structure](https://research.swtch.com/godata)
+- [x] [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
 //todo
 Effective go 学习链接
 https://golang.org/doc/effective_go.html
@@ -303,5 +314,10 @@ https://github.com/golang/go/wiki/GoTalks
 https://github.com/golang/go/wiki/Articles#concurrency--channels
 
 PS: 有些需要编码加深记忆， 有些看看总结。
+Go modle教程 https://blog.golang.org/using-go-modules
+
+Go 2.0设计 https://blog.golang.org/toward-go2
+GC垃圾回收 1 https://blog.golang.org/ismmkeynote
+https://blog.golang.org/go15gc
 :whale2: :whale2: :whale2: 
 
