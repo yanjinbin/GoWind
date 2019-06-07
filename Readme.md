@@ -40,6 +40,8 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 有下列知识点 1. 头等函数作为变量的几种用法 2 高阶函数概念 3 闭包(closure)的变量捕获 外围变量 4 高阶函数在web业务路由Handler功能 5 range和闭包编码常犯的trick 6 Go是值传递，类型分为引用类型(切片 map channel)和值类型(数组)
 
 - [x] 2 [Go的字符串](https://studygolang.com/articles/12261) 1 字符串不可变性质 2 字符串 用 byte char 特别注意Go采用UTF8编码，遇到特殊字符，会有字形和字符串单个字符不一样，这时，需用rune(可以表示任何占据2个字节及以上的单字符)来做处理 3 字符串长度用法辨析ge
+   [Go txt normalize](https://blog.golang.org/normalization) [Go string](https://blog.golang.org/strings) 
+   其实这2篇文章可能还不如上面这边文章讲的通彻,其实UTF8 unicode ascii 为什么乱码，字形，代码点(unicode code point)搞清楚就可以了解Go采用Utf8 以及rune char byte string类型的关系了
 - [x] 3 [Go 指针](https://studygolang.com/articles/12262) 1 指针的表示和解引用(取指针指向的对象数据) 2 指针类型的zero value是零值 ，但是唯独 struct type 没有零值 所以 struct type  不能判断是否nil 参考这2篇文章 Ref: A:https://golang.org/ref/spec#Comparison_operators B: Go各种数据类型的zero value 默认值 https://golang.org/ref/spec#The_zero_value
 
 - [x] 4 [Go方法](https://studygolang.com/articles/12264)  1 为什么要有方法，因为Go不是纯粹的面向对象系统 2 基于类型的方法是一个实现面向OOP的好方法 2 值接收器 ∈ 指针接收器，也就是值接收器的方法，可以用指针接收器。如果是值接收器，那么不能代替，而是Go自动加一个&指针运算符 3 什么时候用值接收器OR指针接收器 参考Go FAQ 章节:Should I define methods on values or pointers?  一般实践原则:用值接收器，除非你想改遍指针的数据  4  结构体成员-->匿名字段 的方法可以直接调用 5 非结构体的方法定义需要和非结构体在同一个包中.
@@ -62,6 +64,8 @@ Golang的组合和多态玩法,没有继承特性
 
 - [x] 12  [Go FAQ](https://golang.org/doc/faq) 读后感: new make区别 一个allocate mem，一个还要继续 initialize ,struct type 不能和nil 做compare 操作，array是值类型。但是slice map channel都是引用类型，不过要强调一点是go都是按值传递 you see is what you want, 另外就是method receiver, where value reciever function, the same is pointer receiver，opposite not work! 需要说明的，如果value receiver 用在pointer receiver上，Go 会自动给她加上&。其他就是Go 语言设计思想了 goroutine 取代thread csp 模型, mutex sync包.取消泛型,同样需要GC。
 Go memory model 另外叙述。
+
+- [x] 13 [Err are values]( https://blog.golang.org/errors-are-values) Rob Pike 首先提出观点err are values,并展示一般的处理方法,区别于一般的try-catch-finally,再通过一个再tokyo会上的故事江苏如何优雅处理err的一个实践例子--->errWriter。这个最佳实践也被用在sdk bufio writer archive等包中。
 
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
@@ -94,6 +98,25 @@ go database sql http://go-database-sql.org/
 context https://studygolang.com/articles/13866
 
 ToDo
+
+ Go泛型话题讨论 http://bit.ly/2wG5zu8
+
+Miscellaneous
+- [x] 1 [GO标准库中文文档](https://studygolang.com/static/pkgdoc/)，这个只能看看库的目录和大致功能，其实没啥用处，直接看英文稳定即可。
+
+- [x] 2 [Go swagger 教程](https://gocn.vip/article/610) Go的swagger 其实代码耦合的挺严重的不好看。
+- [x] 3 [interfaceSlice need explicit type conversion](https://github.com/golang/go/wiki/InterfaceSlice，https://golang.org/doc/faq#convert_slice_of_interface) 
+- [x] 4 [Go data race检测](https://golang.org/doc/articles/race_detector.html,https://brantou.github.io/2017/05/23/go-race-detector/) 用build tag 排除某些包的检测 参考这个[链接戳我](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
+    go build run test -race 用build constraint 去除某些包的data race检测 .rac 会成倍性能损耗的.
+- [x] 5 [从其他语言迁移到Go的Gopher需要维持的信仰Or原则](https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc)
+ >Understand the power of interfaces, they are one of Go’s great gifts, potentially more important than channels or goroutines.
+ >If you are coming from another language, be it a dynamic language like Python or Ruby, or a compiled language like Java or C#, leave your OO baggage at the door. Go is an object-oriented language, but it is not a class-based language and does not support inheritance.
+ 
+ >By removing inheritance from the language, the opportunity to practice the mantra of composition over inheritance is made manifest, and fighting it will only lead to frustration.
+ 
+ >If you’re waiting for generic types and functions to be added to the language, my advice is to stop holding your breath and learn to love the language we have today.
+ 
+ >With the 5th point release done, and the 6th on the way in a few months, the possibilities of a new language feature or syntax tweak are remote. The focus from here on out is tools, reliability, and performance.
 
 //todo
 Effective go 学习链接
@@ -178,23 +201,10 @@ https://medium.com/@ggiovani/tcp-socket-implementation-on-golang-c38b67c5d8b
 go wiki 
 https://github.com/golang/go/wiki
 
-https://github.com/golang/go/wiki/whygo
-
-https://github.com/golang/go/wiki/SuccessStories
-
-https://github.com/golang/go/wiki/FromXToGo
-
-https://golang.org/doc/effective_go.html
-
 https://golang.org/ref/spec
-
-https://hacpai.com/article/1509519289714
 
 //go学习资料 重点推荐
 https://github.com/golang/go/wiki/Learn
-
-// go ide 
-https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins
 
 // go 语言设计思想
 https://talks.golang.org/2012/splash.article
@@ -205,19 +215,7 @@ https://github.com/golang/go/wiki/LearnErrorHandling
 // common mistakes 
 https://github.com/golang/go/wiki/CommonMistakes
 
-//FAQ
-https://golang.org/doc/faq
 
-https://xiaozhou.net/go-makefile-and-auto-version-2016-06-13.html#more 
-
-
-https://blog.golang.org/strings
-
-https://blog.golang.org/normalization
-
-
-// go json 第三方
-http://www.flysnow.org/2017/11/05/go-auto-choice-json-libs.html
 
 ----
 awsome go
@@ -234,9 +232,6 @@ advance topic 高级主题
 https://github.com/golang/go/wiki/LearnConcurrency
 
 
-----
-GO语言编码规范
-https://goo.gl/uwQkBy
 
 ---
 https://github.com/golang/go/wiki/MutexOrChannel
@@ -253,15 +248,6 @@ https://my.oschina.net/henrylee2cn/blog/505535
 https://xiaozhou.net/something-about-defer-2014-05-25.html#more
 
 
------
-go 标准库文档
-https://studygolang.com/static/pkgdoc/
-
-------
-Go swagger 教程 nextodo
-http://www.do1618.com/archives/851/
-https://gocn.io/article/610
-
 学完这个去头条吹比 Go Concurrent
 https://github.com/golang/go/wiki/LearnConcurrency
 
@@ -269,7 +255,6 @@ https://github.com/golang/go/wiki/LearnErrorHandling
 
 https://github.com/golang/go/wiki/LearnServerProgramming
 
-https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc
 
 https://github.com/golang/go/wiki/CodeTools
 
@@ -287,17 +272,13 @@ https://github.com/golang/go/wiki/LockOSThread
 
 https://github.com/golang/go/wiki/MutexOrChannel
 
-https://golang.org/doc/articles/race_detector.html
-
-https://github.com/golang/go/wiki/RaceDetector
-
-https://github.com/golang/go/wiki/InterfaceSlice
 
 https://docs.google.com/document/d/1vrAy9gMpMoS3uaVphB32uVXX4pi-HnNjkMEgyAHX4N4/preview
 
 https://github.com/golang/go/wiki/GoTalks
 
-https://github.com/golang/go/wiki/Articles
+https://github.com/golang/go/wiki/Articles#concurrency--channels
+
 PS: 有些需要编码加深记忆， 有些看看总结。
 :whale2: :whale2: :whale2: 
 
