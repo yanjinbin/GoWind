@@ -67,6 +67,8 @@ Go memory model 另外叙述。
 
 - [x] 13 [Err are values]( https://blog.golang.org/errors-are-values) Rob Pike 首先提出观点err are values,并展示一般的处理方法,区别于一般的try-catch-finally,再通过一个再tokyo会上的故事江苏如何优雅处理err的一个实践例子--->errWriter。这个最佳实践也被用在sdk bufio writer archive等包中。
 
+- [x] 14 [Go Slices: usage and internals](https://blog.golang.org/go-slices-usage-and-internals) slice内部meta属性维护指向array关系，slice按需增长,不用担心index out of range。另外，有个possible gotcha 就是 因为slice 指向array. 如果array 过大(通常发生在读取大文件时候)， 这时候可以使用append函数。主要是丢弃array,或者说array-->slice ,slice之间用append合并。
+
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
 - [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
@@ -93,7 +95,7 @@ https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc
 
 go database sql http://go-database-sql.org/
 
-好blog:https://github.com/golang/go/wiki/Blogs
+好blog: https://github.com/golang/go/wiki/Blogs
 
 context https://studygolang.com/articles/13866
 
@@ -122,6 +124,30 @@ Miscellaneous
 Effective go 学习链接
 https://golang.org/doc/effective_go.html
 
+https://talks.golang.org/2012/waza.slide#30
+
+https://tonybai.com/2017/06/23/an-intro-about-goroutine-scheduler/
+
+https://rakyll.org/scheduler/
+
+https://tonybai.com/2015/08/25/go-debugging-profiling-optimization/
+
+https://tonybai.com/2014/11/15/how-goroutines-work/
+
+https://medium.com/@blanchon.vincent/go-how-does-the-goroutine-stack-size-evolve-447fc02085e5
+
+https://tonybai.com/2017/11/23/the-simple-analysis-of-goroutine-schedule-examples/?utm_campaign=studygolang.com&utm_medium=studygolang.com&utm_source=studygolang.com
+
+https://blog.golang.org/go-at-io-frequently-asked-questions
+
+计算机世界里的定律
+https://github.com/nusr/hacker-laws-zh
+
+https://blog.golang.org/share-memory-by-communicating
+
+https://blog.golang.org/gos-declaration-syntax
+
+https://blog.golang.org/go-concurrency-patterns-timing-out-and
 
 The Go Memory Model
 https://golang.org/ref/mem
@@ -179,19 +205,6 @@ https://blog.golang.org/json-and-go
 http://www.itfanr.cc/2017/03/31/learning-golang/
 
 必须的go文章列表
-1 go work steal scheduler https://rakyll.org/scheduler/
-2 https://golang.org/doc/asm
-3 https://studygolang.com/articles/11720#reply2
-4 http://tonybai.com/2014/11/15/how-goroutines-work/
-5 http://tonybai.com/2017/06/23/an-intro-about-goroutine-scheduler/
-6 https://talks.golang.org/2012/waza.slide#6
-7 http://tonybai.com/2015/08/25/go-debugging-profiling-optimization/
-8 http://tonybai.com/2015/08/27/understanding-go-statements-evaluating-order/
-9 http://tonybai.com/2014/11/15/how-goroutines-work/
-10 https://gocn.io/article/28
-11 http://blog.studygolang.com/2012/12/gdb%E8%B0%83%E8%AF%95go%E7%A8%8B%E5%BA%8F/
-12 https://wizardforcel.gitbooks.io/100-gdb-tips/index.html
-http://gopl-zh.b0.upaiyun.com/ch5/ch5-10.html
 
 https://segmentfault.com/a/1190000006233292
 

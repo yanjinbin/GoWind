@@ -98,3 +98,24 @@ func TestScanner(t *testing.T) {
 func TestConcurrentWrite(t *testing.T) {
 	sdk.ConcurrentWrite()
 }
+
+func TestSlice(t *testing.T) {
+	semantics.Slice()
+	semantics.AppendByte([]byte{'a', 'm', 'e'}, 'r', 'i', 'c', 'a', 'n')
+	filter := semantics.Filter([]int{1, 6, 7}, func(i int) bool {
+		if i > 10 {
+			return false
+		}
+		return true
+	})
+	fmt.Println("filters:", filter)
+	// 这里err 处理的有问题 可以参考 Go Blog err are values --> https://blog.golang.org/errors-are-values
+	path := "./semantics/sample.txt"
+	digits, err := semantics.FindDigits(path)
+	digits, err = semantics.CopyDigits(path)
+	digits, err = semantics.AppendDigits(path)
+	if err != nil {
+		return
+	}
+	fmt.Println("digits:", digits)
+}
