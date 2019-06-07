@@ -69,6 +69,16 @@ Go memory model 另外叙述。
 
 - [x] 14 [Go Slices: usage and internals](https://blog.golang.org/go-slices-usage-and-internals) slice内部meta属性维护指向array关系，slice按需增长,不用担心index out of range。另外，有个possible gotcha 就是 因为slice 指向array. 如果array 过大(通常发生在读取大文件时候)， 这时候可以使用append函数。主要是丢弃array,或者说array-->slice ,slice之间用append合并。
 
+- [x] [JSON and Go](https://blog.golang.org/json-and-go) 讲述 json规范 marshal和unmarshal 以及go如何将复杂的json denote struct type. 
+encode原则
+>Only data structures that can be represented as valid JSON will be encoded:
+>JSON objects only support strings as keys; to encode a Go map type it must be of the form map[string]T (where T is any Go type supported by the json package).
+>Channel, complex, and function types cannot be encoded.
+>Cyclic data structures are not supported; they will cause Marshal to go into an infinite loop.
+>Pointers will be encoded as the values they point to (or 'null' if the pointer is nil).
+decode原则
+> -->tagName--->fieldName--->case insentive filedName
+
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
 - [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
