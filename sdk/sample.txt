@@ -1,0 +1,4 @@
+Hello Gopher !
+Go is eager !
+Go is hot !
+Go is sexy !

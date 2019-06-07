@@ -82,3 +82,19 @@ func TestReflect(t *testing.T) {
 func TestError(t *testing.T) {
 	semantics.Err()
 }
+
+func TestFileIO(t *testing.T) {
+	sdk.FileIO()
+}
+
+func TestBufio(t *testing.T) {
+	sdk.Bufio()
+}
+
+func TestScanner(t *testing.T) {
+	sdk.BufScanner()
+}
+
+func TestConcurrentWrite(t *testing.T) {
+	sdk.ConcurrentWrite()
+}
