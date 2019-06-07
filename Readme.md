@@ -20,6 +20,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 > 3. [gopher academy](https://blog.gopheracademy.com/)
 > 4. [Golang Weekly News](https://golangweekly.com/issues)
 > 5. [golang-nut google group](https://groups.google.com/forum/#!forum/golang-nuts)
+> 6. [Go language specification](https://golang.org/ref/spec)
 
 
 学习分为几大块:
@@ -81,6 +82,8 @@ decode原则
 > -->tagName--->fieldName--->case insentive filedName
 
 - [x] 16 [constant](https://blog.golang.org/constants) constant is untyped value with default type which is refered by syntax. constant give  freedom ,对于Numeric 可以不用损失精度 比如PI. 另外叙述了如何表示最大值问题.取反操作(而非类型转换)
+
+- [x] 17 [Gob Go自有序列化协议](https://blog.golang.org/gobs-of-data) 自描述  不需要额外维护字段信息 节省传输空间 ,proto buffer3个misfeature 1 只支持struct类型 不支持primitive type arrary 2 额外维护字段默认值 3字段分optional 和must不够灵活
 
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
@@ -313,11 +316,26 @@ https://github.com/golang/go/wiki/GoTalks
 
 https://github.com/golang/go/wiki/Articles#concurrency--channels
 
+
+https://blog.golang.org/two-recent-go-talks
+https://blog.golang.org/two-recent-go-articles
 PS: 有些需要编码加深记忆， 有些看看总结。
 Go modle教程 https://blog.golang.org/using-go-modules
 
 Go 2.0设计 https://blog.golang.org/toward-go2
-GC垃圾回收 1 https://blog.golang.org/ismmkeynote
-https://blog.golang.org/go15gc
+GC垃圾回收
+1 https://blog.golang.org/ismmkeynote
+2 https://blog.golang.org/go15gc
+http链路追踪
+https://blog.golang.org/http-tracing
+http2 push
+https://blog.golang.org/h2push
+
+Concurrent
+https://blog.golang.org/concurrency-is-not-parallelism
+https://blog.golang.org/advanced-go-concurrency-patterns
+https://blog.golang.org/context
+
+
 :whale2: :whale2: :whale2: 
 

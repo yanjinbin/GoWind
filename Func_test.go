@@ -123,3 +123,7 @@ func TestSlice(t *testing.T) {
 func TestConst(t *testing.T) {
 	semantics.Const()
 }
+
+func TestGob(t *testing.T) {
+	sdk.Gob()
+}
