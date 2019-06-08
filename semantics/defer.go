@@ -1,7 +1,11 @@
 package semantics
 
 import (
+	"errors"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
 	"sync"
 )
 
@@ -40,6 +44,12 @@ func Defer() {
 	fmt.Println("b return:", b()) // 打印结果为 b return: 2
 	fmt.Println("c() return", c())
 	fmt.Println("d() return", d())
+	ErrDefer()
+	DeferValueOrPointer()
+	DeferClosure()
+	fmt.Println("defer 返回值")
+	release()
+	releaseNew()
 
 }
 
@@ -78,6 +88,7 @@ func d() int {
 	return i
 }
 
+// https://studygolang.com/articles/14831
 // defer的变量修改 返回值 辨析,本质是返回值的类型和声明 https://my.oschina.net/henrylee2cn/blog/505535
 func a() int {
 	var i int
@@ -102,4 +113,130 @@ func b() (i int) {
 		fmt.Println("b defer1:", i) // 打印结果为 b defer1: 1
 	}()
 	return i // 或者直接 return 效果相同
+}
+
+// https://studygolang.com/articles/14831
+// 先判断资源如IO 连接池 对象池 有没有err,有err 说明没有占用资源 ,不需要defer执行释放资源任务
+
+func ErrDefer() error {
+	resp, err := http.Get("www.google.com")
+	// 先判断操作是否成功
+	if err != nil {
+		return err
+	}
+	// 如果操作成功，再进行Close操作
+	defer resp.Body.Close()
+	return nil
+}
+
+type Car struct {
+	model string
+}
+
+func (c Car) PrintModel() {
+	fmt.Println(c.model)
+}
+
+func DeferValueOrPointer() {
+	c := Car{model: "DeLorean DMC-12"}
+	c1 := &c
+	defer c.PrintModel()
+	defer c1.PrintModel()
+	c.model = "Chevrolet Impala"
+}
+
+func DeferClosure() {
+	// case 1
+	for i := 0; i < 3; i++ {
+		defer func() {
+			i++
+			fmt.Println("Case 1,i值", i) // i值是4 开始了 特别注意下哦!
+		}()
+	}
+	defer fmt.Println("i值是4 开始了 特别注意下哦!")
+	// case 2
+	for i := 0; i < 3; i++ {
+		defer func(i int) {
+			i++
+			fmt.Println("Case 2,i值", i)
+		}(i) // 保存局部变量,闭包实参传入
+	}
+	// case 3
+	for i := 0; i < 3; i++ {
+		defer fmt.Println("Case 3, i值", i)
+	}
+}
+
+// defer返回值改变调用者返回值
+func release() error {
+	defer func() error {
+		return errors.New("error")
+	}()
+	return nil
+}
+
+func releaseNew() (err error) {
+	defer func() error {
+		err = errors.New("error")
+		return err
+	}()
+
+	return nil
+}
+
+type myerror struct{}
+
+func (myerror) String() string {
+	return "myerror there!"
+}
+
+func errorly() {
+	defer func() {
+		fmt.Println(recover())
+	}()
+
+	if false {
+		panic(myerror{})
+	}
+}
+
+// 释放相同的资源,改写就是匿名函数传入实参
+func do() error {
+	f, err := os.Open("book.txt")
+	if err != nil {
+		return err
+	}
+	/*
+		defer func() {
+			if err := f.Close(); err != nil {
+				// log etc
+			}
+		}()*/
+
+	defer func(file io.Closer) {
+		if err := f.Close(); err != nil {
+			// log etc
+		}
+	}(f)
+
+	// ..code...
+
+	f, err = os.Open("another-book.txt")
+	if err != nil {
+		return err
+	}
+
+	/*defer func() {
+		if err := f.Close(); err != nil {
+			// log etc
+		}
+	}()*/
+
+	defer func(file io.Closer) {
+		if err := f.Close(); err != nil {
+			// log etc
+		}
+	}(f)
+
+	return nil
 }
