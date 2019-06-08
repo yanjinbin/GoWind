@@ -47,6 +47,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 - [x] 3 [Go 指针](https://studygolang.com/articles/12262) 1 指针的表示和解引用(取指针指向的对象数据) 2 指针类型的zero value是零值 ，但是唯独 struct type 没有零值 所以 struct type  不能判断是否nil 参考这2篇文章 Ref: A:https://golang.org/ref/spec#Comparison_operators B: Go各种数据类型的zero value 默认值 https://golang.org/ref/spec#The_zero_value
 
 - [x] 4 [Go方法](https://studygolang.com/articles/12264)  1 为什么要有方法，因为Go不是纯粹的面向对象系统 2 基于类型的方法是一个实现面向OOP的好方法 2 值接收器 ∈ 指针接收器，也就是值接收器的方法，可以用指针接收器。如果是值接收器，那么不能代替，而是Go自动加一个&指针运算符 3 什么时候用值接收器OR指针接收器 参考Go FAQ 章节:Should I define methods on values or pointers?  一般实践原则:用值接收器，除非你想改遍指针的数据  4  结构体成员-->匿名字段 的方法可以直接调用 5 非结构体的方法定义需要和非结构体在同一个包中.
+[Blog MethodSet](https://github.com/golang/go/wiki/MethodSets) 这篇文章讲述的内容和上面的差不多,
 
 - [x] 5 [Go 接口①](https://studygolang.com/articles/12266) [Go接口②](https://studygolang.com/articles/12325)
 1.接口内部表示(type,value) 2. 接口类型断言和switch选择 3. 实现多个接口 4 接口组合嵌套 reader writer
@@ -87,7 +88,11 @@ decode原则
 - [x] 18 [Iota玩法](https://blog.learngoprogramming.com/golang-const-type-enums-iota-bc4befd096d3) [iota spec](https://golang.org/ref/spec#Iota)
 iota的基本套路 1 create new Type ---> 2 Declare related constants for new Type  玩法 1 递增  2 递减 3 幂级扩大 4 重置 , iota+1 initialize
 
+- [x] 19 [Go Map玩法](https://blog.golang.org/go-maps-in-action),map常用玩法 , key type 必须可以compare , 然后, 读写锁实现并发安全,不保证遍历顺序.
+ 
+
 #### Doing
+- [ ] [map 底层原理实现需要看下](https://www.jianshu.com/p/aa0d4808cbb8 https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html)
 - [ ] Go语言机制 https://studygolang.com/subject/74
 - [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
 - [ ] 9 Go读写文件 

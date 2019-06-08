@@ -131,3 +131,7 @@ func TestGob(t *testing.T) {
 func TestIoat(t *testing.T) {
 	semantics.Iota()
 }
+
+func TestMap(t *testing.T) {
+	sdk.Map()
+}
