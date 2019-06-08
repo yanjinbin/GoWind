@@ -106,6 +106,8 @@ defer function  are executed after any result parameters are set by that return 
 Each time a "defer" statement executes, the function value and parameters to the call are evaluated as usual and saved anew but the actual function is not invoked.
 [关于defer执行时机的提问](http://bit.ly/2XAXhzM)
 名词解释:Function literals is A function literal represents an anonymous function.
+- [x] [SignalHandling](https://github.com/golang/go/wiki/SignalHandling)
+主要利用chan 阻塞,直到signal 入列.最后调用defer函数,完成资源清理工作.
  
 #### Doing
 - [ ] [map 底层原理实现需要看下](https://www.jianshu.com/p/aa0d4808cbb8 https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html)
@@ -153,6 +155,7 @@ Miscellaneous
 - [x] [Go data structure](https://research.swtch.com/godata)
 - [x] [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
 - [x] [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
+- [x] [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章降的一般,就是error封装 ,simplize and reduce error handle
 //todo
 Effective go 学习链接
 https://golang.org/doc/effective_go.html
@@ -193,7 +196,7 @@ Go modle教程 https://blog.golang.org/using-go-modules
 Go 2.0设计 https://blog.golang.org/toward-go2
 
 https://github.com/golang/go/wiki/LearnErrorHandling
-https://github.com/golang/go/wiki/SignalHandling
+
 
 https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff
 
@@ -201,7 +204,7 @@ go database sql http://go-database-sql.org/
 
 好blog: 
 
-https://blog.golang.org/error-handling-and-go
+
 https://blog.golang.org/two-recent-go-talks
 https://www.ardanlabs.com/blog/2017/06/for-range-semantics.html
 
