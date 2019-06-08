@@ -21,6 +21,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 > 4. [Golang Weekly News](https://golangweekly.com/issues)
 > 5. [golang-nut google group](https://groups.google.com/forum/#!forum/golang-nuts)
 > 6. [Go language specification](https://golang.org/ref/spec)
+> 7. [Go recommend blogs](https://github.com/golang/go/wiki/Blogs)
 
 
 学习分为几大块:
@@ -121,23 +122,6 @@ Each time a "defer" statement executes, the function value and parameters to the
 - [ ] 优秀 article https://github.com/golang/go/wiki/Articles
 https://github.com/golang/go/wiki/LearnServerProgramming 服务端编程  如何写中间件
 
-https://github.com/golang/go/wiki/LearnErrorHandling
-
-https://github.com/golang/go/wiki/Articles#concurrency--channels  concurrent 和 channel处理
-
-https://github.com/golang/go/wiki/CommonMistakes
-
-https://github.com/golang/go/wiki/SignalHandling
-https://github.com/golang/go/wiki/SimultaneousAssignment
-https://github.com/golang/go/wiki/SliceTricks
-https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff
-https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc
-
-go database sql http://go-database-sql.org/
-
-好blog: https://github.com/golang/go/wiki/Blogs
-
-context https://studygolang.com/articles/13866
 
 ToDo
 [Testable Examples in Go](https://blog.golang.org/examples)
@@ -168,84 +152,26 @@ Miscellaneous
 ](https://blog.golang.org/slices) 这篇和DONE列表里面讲的其实差不多,相当于前面几篇汇总 包括copy append make 内建函数 string 额外用法
 - [x] [Go data structure](https://research.swtch.com/godata)
 - [x] [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
+- [x] [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
 //todo
 Effective go 学习链接
 https://golang.org/doc/effective_go.html
 
 https://talks.golang.org/2012/waza.slide#30
 
-https://tonybai.com/2017/06/23/an-intro-about-goroutine-scheduler/
-
-https://rakyll.org/scheduler/
-
-https://tonybai.com/2015/08/25/go-debugging-profiling-optimization/
-
-https://tonybai.com/2014/11/15/how-goroutines-work/
-
-https://medium.com/@blanchon.vincent/go-how-does-the-goroutine-stack-size-evolve-447fc02085e5
-
-https://tonybai.com/2017/11/23/the-simple-analysis-of-goroutine-schedule-examples/?utm_campaign=studygolang.com&utm_medium=studygolang.com&utm_source=studygolang.com
-
 https://blog.golang.org/go-at-io-frequently-asked-questions
 
 计算机世界里的定律
 https://github.com/nusr/hacker-laws-zh
 
-https://blog.golang.org/share-memory-by-communicating
-
-https://blog.golang.org/gos-declaration-syntax
-
-https://blog.golang.org/go-concurrency-patterns-timing-out-and
-
-The Go Memory Model
-https://golang.org/ref/mem
-
-Advanced Go Concurrency Patterns
-https://blog.golang.org/advanced-go-concurrency-patterns
-
-Introducing the Go Race Detector
-https://blog.golang.org/race-detector
-
-Share Memory By Communicating
-https://blog.golang.org/share-memory-by-communicating
-https://golang.org/doc/codewalk/sharemem/
-
-Go Concurrency Patterns: Pipelines and cancellation
-https://blog.golang.org/pipelines
-
-
-
-Go Concurrency Patterns: Timing out, moving on
-https://blog.golang.org/go-concurrency-patterns-timing-out-and
-
-
-Getting to Go: The Journey of Go's Garbage Collector
-https://blog.golang.org/ismmkeynote
-
-
-Go Concurrency Patterns: Context
-https://blog.golang.org/context
-
-https://blog.golang.org/index
-
-Generating code
-https://blog.golang.org/generate
 
 Debugging what you deploy in Go 1.12
 https://blog.golang.org/debugging-what-you-deploy
 
-HTTP/2 Server Push
-https://blog.golang.org/h2push
-
-Introducing HTTP Tracing
-https://blog.golang.org/http-tracing
 
 
 必须的go文章列表
 
-https://segmentfault.com/a/1190000006233292
-
-https://medium.com/@ggiovani/tcp-socket-implementation-on-golang-c38b67c5d8b
 
 
 //go学习资料 重点推荐
@@ -254,63 +180,11 @@ https://github.com/golang/go/wiki/Learn
 // go 语言设计思想
 https://talks.golang.org/2012/splash.article
 
-// go error handle 
-https://github.com/golang/go/wiki/LearnErrorHandling
-
-// common mistakes 
-https://github.com/golang/go/wiki/CommonMistakes
-
-
-
-----
-awsome go
-
-https://github.com/avelino/awesome-go
-
-go talk 
+https://github.com/avelino/awesome-go 
 https://github.com/golang/go/wiki/GoTalks
-
-
-----
-advance topic 高级主题
-
-https://github.com/golang/go/wiki/LearnConcurrency
-
-
-
----
-https://github.com/golang/go/wiki/MutexOrChannel
-
-
-https://github.com/golang/go/wiki/LearnConcurrency
-
 https://github.com/golang/go/wiki/LearnServerProgramming
 
-
-https://github.com/golang/go/wiki/CodeTools
-
-https://github.com/golang/go/wiki/Iota
-
-https://github.com/golang/go/wiki/RateLimiting
-
-https://github.com/golang/go/wiki/SliceTricks
-
-https://github.com/golang/go/wiki/SimultaneousAssignment
-
-https://github.com/golang/go/wiki/Timeouts
-
-https://github.com/golang/go/wiki/LockOSThread
-
-https://github.com/golang/go/wiki/MutexOrChannel
-
-
-https://docs.google.com/document/d/1vrAy9gMpMoS3uaVphB32uVXX4pi-HnNjkMEgyAHX4N4/preview
-
 https://github.com/golang/go/wiki/GoTalks
-
-https://github.com/golang/go/wiki/Articles#concurrency--channels
-
-
 https://blog.golang.org/two-recent-go-talks
 https://blog.golang.org/two-recent-go-articles
 PS: 有些需要编码加深记忆， 有些看看总结。
@@ -318,32 +192,30 @@ Go modle教程 https://blog.golang.org/using-go-modules
 
 Go 2.0设计 https://blog.golang.org/toward-go2
 
-GC垃圾回收
-1 https://blog.golang.org/ismmkeynote
-2 https://blog.golang.org/go15gc
-https://segmentfault.com/a/1190000010753702
-http链路追踪
-https://blog.golang.org/http-tracing
-http2 push
-https://blog.golang.org/h2push
+https://github.com/golang/go/wiki/LearnErrorHandling
+https://github.com/golang/go/wiki/SignalHandling
 
-Concurrent
-https://blog.golang.org/concurrency-is-not-parallelism
-https://blog.golang.org/advanced-go-concurrency-patterns
-https://blog.golang.org/context
-https://talks.golang.org/2012/concurrency.slide#1
-https://segmentfault.com/a/1190000006744213
+https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff
 
+go database sql http://go-database-sql.org/
+
+好blog: 
 
 https://blog.golang.org/error-handling-and-go
 https://blog.golang.org/two-recent-go-talks
+https://www.ardanlabs.com/blog/2017/06/for-range-semantics.html
 
-Go语言机制
-https://studygolang.com/subject/74
+https://www.ardanlabs.com/blog/2014/10/error-handling-in-go-part-i.html
 
-性能调优
+https://www.ardanlabs.com/blog/2014/11/error-handling-in-go-part-ii.html
 
-https://blog.golang.org/profiling-go-programs
+https://www.ardanlabs.com/blog/2014/12/using-pointers-in-go.html
+
+https://www.ardanlabs.com/blog/2013/09/iterating-over-slices-in-go.html
+
+https://www.ardanlabs.com/blog/2013/07/singleton-design-pattern-in-go.html
+
+https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.html
 
 :whale2: :whale2: :whale2: 
 

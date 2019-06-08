@@ -19,6 +19,7 @@ type Employee struct {
 	Country string
 }
 
+// 反射在SQL语句编写和解析橙strut类的作用
 func CreateQuery(q interface{}) {
 	if reflect.ValueOf(q).Kind() == reflect.Struct {
 		t := reflect.TypeOf(q).Name()
@@ -50,3 +51,5 @@ func CreateQuery(q interface{}) {
 	}
 	fmt.Println("unsupported type")
 }
+
+// todo https://blog.golang.org/laws-of-reflection https://gocn.vip/article/28

@@ -108,6 +108,8 @@ func CreateFile() {
 	}
 }
 
+// https://studygolang.com/articles/19475
+// fatal error: all goroutines are asleep - deadlock!
 func produce(data chan int, wg *sync.WaitGroup) {
 	n := rand.Intn(999)
 	data <- n

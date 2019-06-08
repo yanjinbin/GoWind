@@ -68,6 +68,6 @@ func Const() {
 	const Huge = 1e1000
 	// —that's just a number, after all—but we can't assign it or even print it. This statement won't even compile:
 
-	fmt.Println(Huge)
+	// fmt.Println(Huge)
 
 }

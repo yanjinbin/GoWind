@@ -26,3 +26,65 @@
  http://ifeve.com/go-concurrency-object-pool/
  
  http://ifeve.com/go-concurrency-how-to-use-lock/
+ 
+https://github.com/golang/go/wiki/Articles#concurrency--channels
+ 
+ Concurrent
+https://blog.golang.org/concurrency-is-not-parallelism
+https://blog.golang.org/advanced-go-concurrency-patterns
+https://blog.golang.org/context
+https://talks.golang.org/2012/concurrency.slide#1
+https://segmentfault.com/a/1190000006744213
+https://github.com/golang/go/wiki/MutexOrChannel
+
+
+https://github.com/golang/go/wiki/LearnConcurrency
+
+
+
+https://blog.golang.org/go-concurrency-patterns-timing-out-and
+
+The Go Memory Model
+https://golang.org/ref/mem
+
+https://github.com/golang/go/wiki/Articles#concurrency--channels  concurrent 和 channel处理
+
+
+
+https://github.com/golang/go/wiki/Timeouts
+
+https://github.com/golang/go/wiki/LockOSThread
+
+https://github.com/golang/go/wiki/MutexOrChannel
+
+
+advance topic 高级主题
+
+https://github.com/golang/go/wiki/LearnConcurrency
+
+Go Concurrency Patterns: Context
+https://blog.golang.org/context
+
+Share Memory By Communicating
+https://blog.golang.org/share-memory-by-communicating
+https://golang.org/doc/codewalk/sharemem/
+
+Go Concurrency Patterns: Pipelines and cancellation
+https://blog.golang.org/pipelines
+
+Advanced Go Concurrency Patterns
+https://blog.golang.org/advanced-go-concurrency-patterns
+
+Go Concurrency Patterns: Timing out, moving on
+https://blog.golang.org/go-concurrency-patterns-timing-out-and
+context https://studygolang.com/articles/13866
+
+https://www.ardanlabs.com/blog/2014/01/concurrency-goroutines-and-gomaxprocs.html
+
+https://www.ardanlabs.com/blog/2013/10/my-channel-select-bug.html
+
+https://www.ardanlabs.com/blog/2013/09/pool-go-routines-to-process-task.html
+
+https://www.ardanlabs.com/blog/2014/02/the-nature-of-channels-in-go.html
+
+https://blog.golang.org/share-memory-by-communicating
