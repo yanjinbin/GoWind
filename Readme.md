@@ -84,6 +84,8 @@ decode原则
 - [x] 16 [constant](https://blog.golang.org/constants) constant is untyped value with default type which is refered by syntax. constant give  freedom ,对于Numeric 可以不用损失精度 比如PI. 另外叙述了如何表示最大值问题.取反操作(而非类型转换)
 
 - [x] 17 [Gob Go自有序列化协议](https://blog.golang.org/gobs-of-data) 自描述  不需要额外维护字段信息 节省传输空间 ,proto buffer3个misfeature 1 只支持struct类型 不支持primitive type arrary 2 额外维护字段默认值 3字段分optional 和must不够灵活
+- [x] 18 [Iota玩法](https://blog.learngoprogramming.com/golang-const-type-enums-iota-bc4befd096d3) [iota spec](https://golang.org/ref/spec#Iota)
+iota的基本套路 1 create new Type ---> 2 Declare related constants for new Type  玩法 1 递增  2 递减 3 幂级扩大 4 重置 , iota+1 initialize
 
 #### Doing
 - [ ] Go语言机制 https://studygolang.com/subject/74
@@ -323,9 +325,11 @@ PS: 有些需要编码加深记忆， 有些看看总结。
 Go modle教程 https://blog.golang.org/using-go-modules
 
 Go 2.0设计 https://blog.golang.org/toward-go2
+
 GC垃圾回收
 1 https://blog.golang.org/ismmkeynote
 2 https://blog.golang.org/go15gc
+https://segmentfault.com/a/1190000010753702
 http链路追踪
 https://blog.golang.org/http-tracing
 http2 push
@@ -335,7 +339,19 @@ Concurrent
 https://blog.golang.org/concurrency-is-not-parallelism
 https://blog.golang.org/advanced-go-concurrency-patterns
 https://blog.golang.org/context
+https://talks.golang.org/2012/concurrency.slide#1
+https://segmentfault.com/a/1190000006744213
 
+
+https://blog.golang.org/error-handling-and-go
+https://blog.golang.org/two-recent-go-talks
+
+Go语言机制
+https://studygolang.com/subject/74
+
+性能调优
+
+https://blog.golang.org/profiling-go-programs
 
 :whale2: :whale2: :whale2: 
 

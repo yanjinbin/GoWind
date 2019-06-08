@@ -127,3 +127,7 @@ func TestConst(t *testing.T) {
 func TestGob(t *testing.T) {
 	sdk.Gob()
 }
+
+func TestIoat(t *testing.T) {
+	semantics.Iota()
+}
