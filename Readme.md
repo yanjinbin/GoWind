@@ -99,6 +99,13 @@ iota的基本套路 1 create new Type ---> 2 Declare related constants for new T
  
 
 - [x] [defer 配合匿名函数的闭包的几个坑 注意理解defer的3个规则](https://studygolang.com/articles/12061,https://studygolang.com/articles/12136,https://studygolang.com/articles/12319)
+[Defer spece](https://golang.org/ref/spec#Defer_statements)
+defer function  are executed after any result parameters are set by that return statement but before the function returns to its caller
+还有这句话 
+Each time a "defer" statement executes, the function value and parameters to the call are evaluated as usual and saved anew but the actual function is not invoked.
+[关于defer执行时机的提问](http://bit.ly/2XAXhzM)
+名词解释:Function literals is A function literal represents an anonymous function.
+ 
 #### Doing
 - [ ] [map 底层原理实现需要看下](https://www.jianshu.com/p/aa0d4808cbb8 https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html)
 - [ ] Go语言机制 https://studygolang.com/subject/74
