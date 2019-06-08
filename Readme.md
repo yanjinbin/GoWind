@@ -108,6 +108,9 @@ Each time a "defer" statement executes, the function value and parameters to the
 名词解释:Function literals is A function literal represents an anonymous function.
 - [x] [SignalHandling](https://github.com/golang/go/wiki/SignalHandling)
 主要利用chan 阻塞,直到signal 入列.最后调用defer函数,完成资源清理工作.
+
+- [x] [Go单例模式](https://www.ardanlabs.com/blog/2013/07/singleton-design-pattern-in-go.html)
+这篇主要讲如何实现goroutine safe的资源load,维护一个私有的变量map,读取只会一次,之后不会改变。没看懂，单例模式和java的单例模式完全概念不同。这篇文章讲的主要是单列模式管理资源如何设计。
  
 #### Doing
 - [ ] [map 底层原理实现需要看下](https://www.jianshu.com/p/aa0d4808cbb8 https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html)
@@ -173,10 +176,6 @@ https://blog.golang.org/debugging-what-you-deploy
 
 
 
-必须的go文章列表
-
-
-
 //go学习资料 重点推荐
 https://github.com/golang/go/wiki/Learn
 
@@ -216,7 +215,6 @@ https://www.ardanlabs.com/blog/2014/12/using-pointers-in-go.html
 
 https://www.ardanlabs.com/blog/2013/09/iterating-over-slices-in-go.html
 
-https://www.ardanlabs.com/blog/2013/07/singleton-design-pattern-in-go.html
 
 https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.html
 
