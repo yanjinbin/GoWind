@@ -56,6 +56,11 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 Golang的组合和多态玩法,没有继承特性  
  
 - [x] 7 [defer](https://studygolang.com/articles/12719) 1 defer用法 入栈, defer 实参的值在函数执行入栈时传入,而非方法正常体结束玩时候在调用(也就是说不在出栈时候调用) 2 入栈遵循Last In First Out 3 defer在sync包 waitgroup的使用
+[官方Blog Defer panic recover](Defer, Panic, and Recover
+https://blog.golang.org/defer-panic-and-recover) defer的3原则
+> 1. A deferred function's arguments are evaluated when the defer statement is evaluated.
+> 2. Deferred function calls are executed in Last In First Out order after the surrounding function returns.
+> 3. Deferred functions may read and assign to the returning function's named return values.
 
 - [x] 8 [panic recover 实践](https://studygolang.com/articles/12785)  总结:函数/方法 发生panic后,不会再执行正常流程,执行完毕所有defer出栈之后,程序控制会转移给调用方,直到当前协程的所有函数退出,程序打印处panic 堆栈信息.可以用recover恢复同一个协程的panic,但是要注意此时的panic信息,要用debug.PrintStack方法打印.
 
@@ -105,6 +110,8 @@ iota的基本套路 1 create new Type ---> 2 Declare related constants for new T
 - [ ] 16 为什么不支持generic http://bit.ly/2wG5zu8
 - [ ] 优秀 article https://github.com/golang/go/wiki/Articles
 https://github.com/golang/go/wiki/LearnServerProgramming 服务端编程  如何写中间件
+
+https://github.com/golang/go/wiki/LearnErrorHandling
 
 https://github.com/golang/go/wiki/Articles#concurrency--channels  concurrent 和 channel处理
 
@@ -196,8 +203,7 @@ https://golang.org/doc/codewalk/sharemem/
 Go Concurrency Patterns: Pipelines and cancellation
 https://blog.golang.org/pipelines
 
-Defer, Panic, and Recover
-https://blog.golang.org/defer-panic-and-recover
+
 
 Go Concurrency Patterns: Timing out, moving on
 https://blog.golang.org/go-concurrency-patterns-timing-out-and
@@ -224,16 +230,6 @@ https://blog.golang.org/h2push
 Introducing HTTP Tracing
 https://blog.golang.org/http-tracing
 
-Go maps in action
-https://blog.golang.org/go-maps-in-action
-
-Go Slices: usage and internals
-https://blog.golang.org/go-slices-usage-and-internals
-
-JSON and Go
-https://blog.golang.org/json-and-go
-
-http://www.itfanr.cc/2017/03/31/learning-golang/
 
 必须的go文章列表
 
@@ -241,11 +237,6 @@ https://segmentfault.com/a/1190000006233292
 
 https://medium.com/@ggiovani/tcp-socket-implementation-on-golang-c38b67c5d8b
 
-----
-go wiki 
-https://github.com/golang/go/wiki
-
-https://golang.org/ref/spec
 
 //go学习资料 重点推荐
 https://github.com/golang/go/wiki/Learn
@@ -280,22 +271,8 @@ https://github.com/golang/go/wiki/LearnConcurrency
 ---
 https://github.com/golang/go/wiki/MutexOrChannel
 
----
-defer 5个坑
 
-https://studygolang.com/articles/12061
-
-https://deepzz.com/post/how-to-use-defer-in-golang.html
-
-https://my.oschina.net/henrylee2cn/blog/505535
-
-https://xiaozhou.net/something-about-defer-2014-05-25.html#more
-
-
-学完这个去头条吹比 Go Concurrent
 https://github.com/golang/go/wiki/LearnConcurrency
-
-https://github.com/golang/go/wiki/LearnErrorHandling
 
 https://github.com/golang/go/wiki/LearnServerProgramming
 

@@ -36,6 +36,10 @@ func Defer() {
 	}
 	wg.Wait()
 	fmt.Println("\nAll goroutine finish execute.....")
+	fmt.Println("a return:", a()) // 打印结果为 a return: 0
+	fmt.Println("b return:", b()) // 打印结果为 b return: 2
+	fmt.Println("c() return", c())
+	fmt.Println("d() return", d())
 
 }
 
@@ -52,4 +56,50 @@ func (r rect) area(wg *sync.WaitGroup) {
 	}
 	area := r.length * r.width
 	fmt.Printf("\nrect %v's area is %v\n", r, area)
+}
+
+// 参见官方 连接 https://blog.golang.org/defer-panic-and-recover 解释的比较清楚
+// 1. A deferred function's arguments are evaluated when the defer statement is evaluated.
+// 2. Deferred function calls are executed in Last In First Out order after the surrounding function returns.
+// 3. Deferred functions may read and assign to the returning function's named return values.
+//
+// return 2 not 1
+func c() (i int) {
+	defer func() { i++ }()
+	return 1
+}
+
+func d() int {
+	var i int = 4
+	defer func() {
+		i++
+		fmt.Println("d  defer i值", i)
+	}()
+	return i
+}
+
+// defer的变量修改 返回值 辨析,本质是返回值的类型和声明 https://my.oschina.net/henrylee2cn/blog/505535
+func a() int {
+	var i int
+	defer func() {
+		i++
+		fmt.Println("a defer2:", i) // 打印结果为 a defer2: 2
+	}()
+	defer func() {
+		i++
+		fmt.Println("a defer1:", i) // 打印结果为 a defer1: 1
+	}()
+	return i
+}
+
+func b() (i int) {
+	defer func() {
+		i++
+		fmt.Println("b defer2:", i) // 打印结果为 b defer2: 2
+	}()
+	defer func() {
+		i++
+		fmt.Println("b defer1:", i) // 打印结果为 b defer1: 1
+	}()
+	return i // 或者直接 return 效果相同
 }
