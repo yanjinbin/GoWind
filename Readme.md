@@ -22,6 +22,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 > 5. [golang-nut google group](https://groups.google.com/forum/#!forum/golang-nuts)
 > 6. [Go language specification](https://golang.org/ref/spec)
 > 7. [Go recommend blogs](https://github.com/golang/go/wiki/Blogs)
+> 8. [Effective Go](https://golang.org/doc/effective_go.html)
 
 
 学习分为几大块:
@@ -111,6 +112,14 @@ Each time a "defer" statement executes, the function value and parameters to the
 
 - [x] [Go单例模式](https://www.ardanlabs.com/blog/2013/07/singleton-design-pattern-in-go.html)
 这篇主要讲如何实现goroutine safe的资源load,维护一个私有的变量map,读取只会一次,之后不会改变。没看懂，单例模式和java的单例模式完全概念不同。这篇文章讲的主要是单列模式管理资源如何设计。
+- [x] [Effective_go cocurrency chapter](https://golang.org/doc/effective_go.html#concurrency)
+原则 share memory by communicate , not communicate by shared memory 
+
+channel 有无缓冲. channels of channel ,将每一次请求的数据,数据处理方法和一个存放数据的channel 抽象成一个请求 入列即可.
+
+利用goroutine也可以写出parallelize 程序.
+
+A leaky buffer : 通过一个buffered channel 在client 和 server端进行通信.
  
 #### Doing
 - [ ] [map 底层原理实现需要看下](https://www.jianshu.com/p/aa0d4808cbb8 https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html)
@@ -160,8 +169,6 @@ Miscellaneous
 - [x] [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
 - [x] [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章降的一般,就是error封装 ,simplize and reduce error handle
 //todo
-Effective go 学习链接
-https://golang.org/doc/effective_go.html
 
 https://talks.golang.org/2012/waza.slide#30
 
@@ -183,7 +190,7 @@ https://github.com/golang/go/wiki/Learn
 https://talks.golang.org/2012/splash.article
 
 https://github.com/avelino/awesome-go 
-https://github.com/golang/go/wiki/GoTalks
+
 https://github.com/golang/go/wiki/LearnServerProgramming
 
 https://github.com/golang/go/wiki/GoTalks
