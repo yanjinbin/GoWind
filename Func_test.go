@@ -1,10 +1,12 @@
 package main
 
 import (
+	. "GoWind/concurrent"
 	"GoWind/sdk"
 	"GoWind/semantics"
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestFirstClassFunction(t *testing.T) {
@@ -134,4 +136,112 @@ func TestIoat(t *testing.T) {
 
 func TestMap(t *testing.T) {
 	sdk.Map()
+}
+
+func TestConcurrent(t *testing.T) {
+	// case 1
+	/*
+		go concurrent.Boring("easy boy")
+		fmt.Println("调用main 结束")*/
+
+	// case 2
+
+	/*go concurrent.Boring("easy boy")
+	fmt.Println("I'm listening")
+	time.Sleep(2 * time.Second)
+	fmt.Println("You are boring, I'm leaving !")
+	*/
+	// case 3
+
+	/*c := make(chan string)
+	go concurrent.BoringChan("boring!", c)
+	for i := 0; i < 5; i++ {
+		fmt.Printf("You say: %q\n", <-c) // Receive expression is just a value.
+	}
+	fmt.Println("You're boring; I'm leaving.")*/
+
+	// case 4
+
+	d := BoringChanReturn("boring!") // Function returning a channel.
+	for i := 0; i < 5; i++ {
+		fmt.Printf("You say: %q\n", <-d)
+	}
+	fmt.Println("You're boring; I'm leaving.")
+
+	// case 5 more instances
+	// lockstep解释:a way of marching with each person as close as possible to the one in front.
+	joe := BoringChanReturn("Joe")
+	ann := BoringChanReturn("Ann")
+	for i := 0; i < 5; i++ {
+		fmt.Println(<-joe)
+		fmt.Println(<-ann)
+	}
+	fmt.Println("You're both boring; I'm leaving.")
+
+	//case 6 fan-in and fan-out
+	c := FanIn(BoringChanReturn("xiaoming"), BoringChanReturn("Lileir"))
+	for i := 0; i < 10; i++ {
+		fmt.Println(<-c)
+	}
+	fmt.Println("You're both boring; I'm leaving.")
+
+	// case 7 use select to fan-in fan-out
+	fmt.Println("===case 7===")
+	c7 := BoringChanReturn("joe")
+Loop:
+	for {
+		select {
+		case s := <-c7:
+			fmt.Println("s:", s, time.Now())
+		case <-time.After(1 * time.Second):
+			fmt.Println("you are too slow")
+			// 加不加return 需要重视
+			fmt.Println("跳出循环")
+			break Loop
+
+		}
+	}
+
+	// case 8 tag:select关键字 whole conversation time out
+	fmt.Println("===case 8====", time.Now())
+	c8 := BoringChanReturn("Paul")
+	timeout := time.After(5 * time.Second)
+	for {
+		select {
+		case s := <-c8:
+			fmt.Println("s:", s, time.Now())
+		case <-timeout:
+			fmt.Println("you talk too much")
+			//加不加return 可是不一样的哦
+			// 不加 执行一次之后,就失效了 不起作用了
+			return
+		}
+	}
+}
+
+func TestSelect(t *testing.T) {
+	c := make(chan int)
+	c <- 11
+	c1 := make(chan int)
+	c1 <- 23
+	Select(nil, c, nil)
+}
+
+func TestSynchronous(t *testing.T) {
+	Synchronous()
+}
+
+func TestEffectiveGo(t *testing.T) {
+	// ChannelsOfChannels()
+	ChanInChan()
+}
+
+func TestChan(t *testing.T) {
+	// StackOverFlow上面的解答 http://bit.ly/2XH3RVy
+	// chan用法辨析
+	fmt.Println("比较chan1 chan2 chan3 chan4 ,这是什么原因呢?")
+	Chan1()
+	Chan2()
+	Chan3()
+	Chan4()
 }
