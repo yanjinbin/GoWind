@@ -1,17 +1,14 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
+	"GoWind/concurrent"
 	"math/rand"
-	"os"
-	"os/signal"
-	"runtime"
 	"time"
 )
 
 func main() {
-	fmt.Println("执行main函数")
+	concurrent.Chan3()
+	/*fmt.Println("执行main函数")
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	start := time.Now()
 	var t *time.Timer
@@ -31,7 +28,7 @@ func main() {
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, os.Interrupt)
 	// 一直阻塞,直到出列之后,调用defer
-	<-sig
+	<-sig*/
 }
 func randomDuration() time.Duration {
 	return time.Duration(rand.Int63n(1e9))

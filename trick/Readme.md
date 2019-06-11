@@ -10,3 +10,5 @@ https://github.com/golang/go/wiki/SliceTricks
 
 // common mistakes 
 https://github.com/golang/go/wiki/CommonMistakes
+
+https://golang.org/doc/faq#nil_error

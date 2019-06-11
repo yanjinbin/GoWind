@@ -3,6 +3,7 @@ package concurrent
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -44,12 +45,13 @@ func process(r *http.Request) {
 	time.Sleep(5 * time.Second)
 }
 
+/*
 func ServeBug(queue chan *http.Request) {
 	for {
 		req := <-queue
 		go handle(req) // Don't wait for handle to finish.
 	}
-}
+}*/
 
 func Serve(queue chan *http.Request) {
 	for req := range queue {
@@ -136,4 +138,5 @@ func server() {
 			// Free list full, just carry on.
 		}
 	}
+	os.Getpid()
 }

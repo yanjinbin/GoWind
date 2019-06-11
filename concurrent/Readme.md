@@ -1,5 +1,7 @@
 ### Go语言并发模型专题
 
+https://github.com/golang/go/wiki/LearnConcurrency
+
  Go的内存模型 
  http://ifeve.com/go-memhappen-before%EF%BC%88%E4%B8%80%EF%BC%89/
  
