@@ -114,6 +114,10 @@ Each time a "defer" statement executes, the function value and parameters to the
 这篇主要讲如何实现goroutine safe的资源load,维护一个私有的变量map,读取只会一次,之后不会改变。没看懂，单例模式和java的单例模式完全概念不同。这篇文章讲的主要是单列模式管理资源如何设计。
 - [x] [Effective_go cocurrency chapter](https://golang.org/doc/effective_go.html#concurrency)
 原则 share memory by communicate , not communicate by shared memory 
+- [x] [Go statements, Channel types, Send statements](https://golang.org/ref/spec#Channel_types)
+1. channel的 len cap 和关闭 以及 channel 在何时blocked
+2. nil channel , full channel, unbuffered channel will be blocked.
+3. Channel type,len dynamic change,cap,close,
 
 channel 有无缓冲. channels of channel ,将每一次请求的数据,数据处理方法和一个存放数据的channel 抽象成一个请求 入列即可.
 

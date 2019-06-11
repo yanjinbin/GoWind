@@ -245,3 +245,7 @@ func TestChan(t *testing.T) {
 	Chan3()
 	Chan4()
 }
+
+func TestChannelReceiveSend(t *testing.T) {
+	Channel()
+}
