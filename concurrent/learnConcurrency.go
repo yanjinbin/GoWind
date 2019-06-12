@@ -30,4 +30,19 @@ func Channel() {
 		fmt.Println("输出chan type的zero value了--->\t", rs, "len:", len(channels), "cap:", cap(channels))
 	}
 	fmt.Println("可以看到channel len长度变小了0-1-2-3-4-5-4,cap 依旧是10")
+	// panic: send on closed channel
+	channels <- 1
+}
+
+func SelectSample(c1, c2, c3 chan int) {
+	select {
+	case v1 := <-c1:
+		fmt.Printf("received %v from c1\n", v1)
+	case v2 := <-c2:
+		fmt.Printf("received %v from c2\n", v2)
+	case c3 <- 23:
+		fmt.Printf("sent %v to c3\n", 23)
+	default:
+		fmt.Printf("no one was ready to communicate\n")
+	}
 }

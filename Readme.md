@@ -172,7 +172,48 @@ Miscellaneous
 - [x] [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
 - [x] [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
 - [x] [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章降的一般,就是error封装 ,simplize and reduce error handle
+- [x] [What happens with closures running as goroutines?](https://golang.org/doc/faq#closures_and_goroutines) 闭包的传参和值引用问题,这个问题好多次了,不想讲了
+- [x] [Why doesn't my program run faster with more CPUs?](https://golang.org/doc/faq#parallel_slow) switch context at the cost of more cpu
+--->[concurrent is not parallelism](https://blog.golang.org/concurrency-is-not-parallelism)
+- [x] [How can I control the number of CPUs? ](https://golang.org/doc/faq#number_cpus) use func GOMAXPROCS(n int) int
+
 //todo
+[go memory model](https://golang.org/ref/mem)
+https://golang.org/pkg/sync/atomic/
+[Rethinking Classical Concurrency Patterns](http://bit.ly/2XDt3vT)
+
+https://blog.golang.org/share-memory-by-communicating
+
+https://golang.org/doc/codewalk/sharemem/
+
+https://gobyexample.com/stateful-goroutines
+
+https://inconshreveable.com/07-08-2014/principles-of-designing-go-apis-with-channels/
+
+https://www.youtube.com/watch?v=3EW1hZ8DVyw
+
+https://blog.golang.org/pipelines
+
+https://blog.golang.org/concurrency-is-not-parallelism
+
+GopherCon 2015: Richard Fliam - A Practical Guide to Preventing Deadlocks and Leaks in Go
+
+https://blog.golang.org/go-concurrency-patterns-timing-out-and
+
+https://blog.golang.org/share-memory-by-communicating
+
+https://talks.golang.org/2012/waza.slide#1
+
+https://talks.golang.org/2013/advconc.slide#1
+
+https://golang.org/ref/spec#Select_statements
+
+
+https://golang.org/pkg/sync/
+
+https://barrgroup.com/Embedded-Systems/How-To/RTOS-Mutex-Semaphore
+
+https://blog.golang.org/context
 
 https://talks.golang.org/2012/waza.slide#30
 
@@ -185,8 +226,23 @@ https://github.com/nusr/hacker-laws-zh
 Debugging what you deploy in Go 1.12
 https://blog.golang.org/debugging-what-you-deploy
 
+go interview
+https://github.com/goquiz/goquiz.github.io
+
+深入解析go https://tiancaiamao.gitbooks.io/go-internals/content/zh/
 
 
+https://hackernoon.com/dancing-with-go-s-mutexes-92407ae927bf
+https://medium.com/@matryer/stopping-goroutines-golang-1bf28799c1cb
+https://medium.com/@cep21/what-accept-interfaces-return-structs-means-in-go-2fe879e25ee8
+https://medium.com/@trevor4e/learning-gos-concurrency-through-illustrations-8c4aff603b3
+https://www.sohamkamani.com/blog/2018/02/18/golang-data-race-and-how-to-fix-it/
+https://guzalexander.com/2013/12/06/golang-channels-tutorial.html
+https://medium.com/@cep21/gos-append-is-not-always-thread-safe-a3034db7975
+http://go-database-sql.org/overview.html
+https://goquiz.github.io/#gc
+https://drive.google.com/file/d/1u0be-HVTaT_gz4vvSgkUwvCCrNSTeP17/view?usp=sharing
+https://github.com/emluque/golang-internals-resources
 //go学习资料 重点推荐
 https://github.com/golang/go/wiki/Learn
 
@@ -231,3 +287,6 @@ https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.htm
 
 :whale2: :whale2: :whale2: 
 
+接下来计划 学完learn concurrency部分 总结
+学Garbage Collector机制 总结
+学Gorotutine Scheduler 总结

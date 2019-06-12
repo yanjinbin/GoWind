@@ -5,6 +5,7 @@ import (
 	"GoWind/sdk"
 	"GoWind/semantics"
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 )
@@ -219,14 +220,6 @@ Loop:
 	}
 }
 
-func TestSelect(t *testing.T) {
-	c := make(chan int)
-	c <- 11
-	c1 := make(chan int)
-	c1 <- 23
-	Select(nil, c, nil)
-}
-
 func TestSynchronous(t *testing.T) {
 	Synchronous()
 }
@@ -248,4 +241,42 @@ func TestChan(t *testing.T) {
 
 func TestChannelReceiveSend(t *testing.T) {
 	Channel()
+	// ints := make(chan int, 1)
+	// SelectSample(nil, ints, nil)
+}
+
+func TestAppend(t *testing.T) {
+	x := []string{"start"}
+
+	wg := sync.WaitGroup{}
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		y := append(x, "hello", "world")
+		t.Log(cap(y), len(y))
+	}()
+	go func() {
+		defer wg.Done()
+		z := append(x, "goodbye", "bob")
+		t.Log(cap(z), len(z))
+	}()
+	wg.Wait()
+}
+
+func TestAppend1(t *testing.T) {
+	x := make([]string, 0, 6)
+
+	wg := sync.WaitGroup{}
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		y := append(x, "hello", "world")
+		t.Log(len(y))
+	}()
+	go func() {
+		defer wg.Done()
+		z := append(x, "goodbye", "bob")
+		t.Log(len(z))
+	}()
+	wg.Wait()
 }
