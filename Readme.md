@@ -98,6 +98,82 @@ decode原则
 iota的基本套路 1 create new Type ---> 2 Declare related constants for new Type  玩法 1 递增  2 递减 3 幂级扩大 4 重置 , iota+1 initialize
 
 - [x] 19 [Go Map玩法](https://blog.golang.org/go-maps-in-action),map常用玩法 , key type 必须可以compare , 然后, 读写锁实现并发安全,不保证遍历顺序.
+
+- [x] 20 [Go memory model](https://golang.org/ref/mem) 
+1 happen before 规则讲述reorder 满足 某种partial order,那么 can read the desired value when write happening
+2 synchronization 规则 
+2.1 init()函数的顺序 
+2.2  goroutine create happen before created goroutine begin execute
+2.3  goroutine exit not guaranteed to happen before any event.if necessary,use lock or channel communication 
+3  channel communication 
+ Each send on a particular channel is matched to a corresponding receive from that channel, usually in a **different** goroutine. 
+ tips: 注意 receive 和 send 是different goroutine
+
+```go
+var c = make(chan int, 10)
+var a string
+
+func f() {
+	a = "hello, world"
+	c <- 0
+}
+
+func main() {
+	go f()
+	<-c
+	print(a)
+}
+```
+
+
+> The closing of a channel happens before a receive that returns a zero value because the channel is closed.
+
+> In the previous example, replacing c <- 0 with close(c) yields a program with the same guaranteed behavior.
+
+高能预警.....
+
+A receive from an unbuffered channel happens before the send on that channel completes.
+
+注意是unbuffered channel哦 
+
+demo如下
+
+```go
+var c = make(chan int)
+var a string
+
+func f() {
+	a = "hello, world"
+	<-c
+}
+func main() {
+	go f()
+	c <- 0
+	print(a)
+}
+```
+
+
+那么接下来,对于buffered channel呢,规则如下
+The kth receive on a channel with capacity C happens before the k+Cth send from that channel completes
+
+
+>This rule generalizes the previous rule to buffered channels. It allows a counting semaphore to be modeled by a buffered channel: the number of items in the channel corresponds to the number of active uses, the capacity of the channel corresponds to the maximum number of simultaneous uses, sending an item acquires the semaphore, and receiving an item releases the semaphore. This is a common idiom for limiting concurrency.
+ 
+这段废话讲述的是 可以用buffered channel 构建semaphore 同步工具类.
+
+锁(mutex)和读写锁(mutex)
+对于锁,系铃还需解铃人(反过来了),那么这段话可以很好理解了.
+> For any sync.Mutex or sync.RWMutex variable l and n < m, call n of l.Unlock() happens before call m of l.Lock() returns.
+
+if m > n, n个unlock happen before 于 lock()
+
+对于读写锁呢, 除了解锁Happen before加锁之外，还要做到读写互斥，写写互斥和写读互斥。
+
+最后是once 起始就是用mutex 和done标记位加上double check实现只做一次function
+
+
+
  
 
 - [x] [defer 配合匿名函数的闭包的几个坑 注意理解defer的3个规则](https://studygolang.com/articles/12061,https://studygolang.com/articles/12136,https://studygolang.com/articles/12319)
@@ -289,4 +365,3 @@ https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.htm
 
 接下来计划 学完learn concurrency部分 总结
 学Garbage Collector机制 总结
-学Gorotutine Scheduler 总结

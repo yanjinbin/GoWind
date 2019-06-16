@@ -280,3 +280,21 @@ func TestAppend1(t *testing.T) {
 	}()
 	wg.Wait()
 }
+
+func TestMutex(t *testing.T) {
+	Mutex()
+}
+
+func TestCond(t *testing.T) {
+	Cond()
+}
+
+func TestOnceDo(t *testing.T) {
+	OnceDo()
+}
+
+func TestMisc(t *testing.T) {
+	if 0&0 == 0 {
+		fmt.Println(1)
+	}
+}
