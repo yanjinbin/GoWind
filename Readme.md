@@ -63,8 +63,8 @@ https://blog.golang.org/defer-panic-and-recover) defer的3原则
 > 1. A deferred function's arguments are evaluated when the defer statement is evaluated.
 > 2. Deferred function calls are executed in Last In First Out order after the surrounding function returns.
 > 3. Deferred functions may read and assign to the returning function's named return values.
-
-http://bit.ly/2XyYkzY 
+[defer gotcha](http://bit.ly/2XyYkzY )
+[defer spec](https://golang.org/ref/spec#Defer_statements,http://bit.ly/2WK1uzL)  注意defer的restriction,也就是shuo defer len("aaa") 是defer不能work的,defer没用
 
 - [x] 8 [panic recover 实践](https://studygolang.com/articles/12785)  总结:函数/方法 发生panic后,不会再执行正常流程,执行完毕所有defer出栈之后,程序控制会转移给调用方,直到当前协程的所有函数退出,程序打印处panic 堆栈信息.可以用recover恢复同一个协程的panic,但是要注意此时的panic信息,要用debug.PrintStack方法打印.
 
