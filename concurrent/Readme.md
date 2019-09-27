@@ -17,6 +17,26 @@ https://github.com/golang/go/wiki/LearnConcurrency
  
  http://ifeve.com/go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BE%8E-%E4%BA%92%E6%96%A5%E9%94%81/
  
+ golang 内存模型基本算是看过了  主要讲述的是go关键字 sync atomic channel 的用法 和定义
+ 
+ go context 学习
+ https://golang.org/pkg/context  context实践原则
+ https://blog.golang.org/context  解释context API用法
+ 
+ https://www.flysnow.org/2017/05/12/go-in-action-go-context.html
+ go context 的用法 控制一个或者多个routine的用法
+ 
+ https://studygolang.com/articles/18931
+ 
+ 
+ go blog 中文翻译写得还不错的文章
+ https://segmentfault.com/a/1190000006815341
+ https://segmentfault.com/a/1190000006744213
+ https://segmentfault.com/a/1190000006670880
+ https://segmentfault.com/a/1190000006261218
+
+ 
+ 
  http://ifeve.com/go-concurrency-execute-once/
  
  http://ifeve.com/go-concurrent-waitgroup/

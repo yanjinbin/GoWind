@@ -163,5 +163,5 @@ func Iota() {
 	activity = Sleeping
 	// now you know that it's been
 	// initialized
-	fmt.Println(activity)
+	fmt.Println(activity, Walking, Reset, Running)
 }

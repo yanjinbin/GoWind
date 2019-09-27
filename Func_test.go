@@ -292,9 +292,3 @@ func TestCond(t *testing.T) {
 func TestOnceDo(t *testing.T) {
 	OnceDo()
 }
-
-func TestMisc(t *testing.T) {
-	if 0&0 == 0 {
-		fmt.Println(1)
-	}
-}
