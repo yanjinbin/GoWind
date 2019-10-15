@@ -365,3 +365,9 @@ https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.htm
 
 接下来计划 学完learn concurrency部分 总结
 学Garbage Collector机制 总结
+
+https://blog.golang.org/ismmkeynote
+go调度
+https://studygolang.com/articles/14264
+go垃圾回收
+https://studygolang.com/articles/21569
