@@ -1,9 +1,7 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"time"
+	"sync"
 )
 
 /*func main() {
@@ -55,7 +53,7 @@ import (
 	time.Sleep(5 * time.Second)
 }*/
 
-func main() {
+/*func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	go watch(ctx, "【监控1】")
 	go watch(ctx, "【监控2】")
@@ -79,4 +77,19 @@ func watch(ctx context.Context, name string) {
 			time.Sleep(2 * time.Second)
 		}
 	}
+}*/
+
+var l sync.Mutex
+var b string = "abcd"
+
+func ff() {
+	b = "hello, world"
+	l.Unlock()
+}
+
+func main() {
+	l.Lock()
+	go ff()
+	l.Lock()
+	print(b)
 }

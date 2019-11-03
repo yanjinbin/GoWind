@@ -14,6 +14,15 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 
 3. 每周关注golang weekly news
 
+4. Golang issue里面也有很多东西, 但是有些写的indirect,
+正如ardan说的一样,GC目前一直在改进,目前是标记清除的 Dijkstra的三色标记,
+加上hybird write barrier(处理 goroutine stack上 black object pointer to white object)
+
+GC调度designer是 dvyukov  M:N模型 G-M-P  GMM模型
+这篇总结的比较全面,而且给出了很多有用的超链接,正是我想总结的
+http://legendtkl.com/2017/04/28/golang-gc/
+
+
 > Reference:
 > 1. [Golang Wiki](https://github.com/golang/go/wiki) 
 > 2. [GCTT翻译小组](https://studygolang.com/gctt)
@@ -55,7 +64,7 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 1.接口内部表示(type,value) 2. 接口类型断言和switch选择 3. 实现多个接口 4 接口组合嵌套 reader writer
 
 - [x] 6  [组合](https://studygolang.com/articles/12680) [多态](https://studygolang.com/articles/12681)
-Golang的组合和多态玩法,没有继承特性  
+Golang的组合和多态玩法,没有继承特性 ,组合实现继承,接口实现多态
  
 - [x] 7 [defer](https://studygolang.com/articles/12719) 1 defer用法 入栈, defer 实参的值在函数执行入栈时传入,而非方法正常体结束玩时候在调用(也就是说不在出栈时候调用) 2 入栈遵循Last In First Out 3 defer在sync包 waitgroup的使用
 [官方Blog Defer panic recover](Defer, Panic, and Recover
@@ -64,7 +73,8 @@ https://blog.golang.org/defer-panic-and-recover) defer的3原则
 > 2. Deferred function calls are executed in Last In First Out order after the surrounding function returns.
 > 3. Deferred functions may read and assign to the returning function's named return values.
 [defer gotcha](http://bit.ly/2XyYkzY )
-[defer spec](https://golang.org/ref/spec#Defer_statements,http://bit.ly/2WK1uzL)  注意defer的restriction,也就是shuo defer len("aaa") 是defer不能work的,defer没用
+[defer spec](https://golang.org/ref/spec#Defer_statements)  注意defer的restriction,也就是说 defer len("aaa") 是defer不能work的,defer没用  
+[比较tricky case,什么时候捕获](http://bit.ly/2WK1uzL)
 
 - [x] 8 [panic recover 实践](https://studygolang.com/articles/12785)  总结:函数/方法 发生panic后,不会再执行正常流程,执行完毕所有defer出栈之后,程序控制会转移给调用方,直到当前协程的所有函数退出,程序打印处panic 堆栈信息.可以用recover恢复同一个协程的panic,但是要注意此时的panic信息,要用debug.PrintStack方法打印.
 
@@ -77,7 +87,7 @@ https://blog.golang.org/defer-panic-and-recover) defer的3原则
 - [x] 12  [Go FAQ](https://golang.org/doc/faq) 读后感: new make区别 一个allocate mem，一个还要继续 initialize ,struct type 不能和nil 做compare 操作，array是值类型。但是slice map channel都是引用类型，不过要强调一点是go都是按值传递 you see is what you want, 另外就是method receiver, where value reciever function, the same is pointer receiver，opposite not work! 需要说明的，如果value receiver 用在pointer receiver上，Go 会自动给她加上&。其他就是Go 语言设计思想了 goroutine 取代thread csp 模型, mutex sync包.取消泛型,同样需要GC。
 Go memory model 另外叙述。
 
-- [x] 13 [Err are values]( https://blog.golang.org/errors-are-values) Rob Pike 首先提出观点err are values,并展示一般的处理方法,区别于一般的try-catch-finally,再通过一个再tokyo会上的故事江苏如何优雅处理err的一个实践例子--->errWriter。这个最佳实践也被用在sdk bufio writer archive等包中。
+- [x] 13 [Err are values]( https://blog.golang.org/errors-are-values) Rob Pike 首先提出观点err are values,并展示一般的处理方法,区别于一般的try-catch-finally,再通过一个在tokyo会上的故事讲述如何优雅处理err的一个实践例子--->errWriter。这个最佳实践也被用在sdk bufio writer archive等包中。
 
 - [x] 14 [Go Slices: usage and internals](https://blog.golang.org/go-slices-usage-and-internals) slice内部meta属性维护指向array关系，slice按需增长,不用担心index out of range。另外，有个possible gotcha 就是 因为slice 指向array. 如果array 过大(通常发生在读取大文件时候)， 这时候可以使用append函数。主要是丢弃array,或者说array-->slice ,slice之间用append合并。
 
@@ -91,7 +101,7 @@ encode原则
 decode原则
 > -->tagName--->fieldName--->case insentive filedName
 
-- [x] 16 [constant](https://blog.golang.org/constants) constant is untyped value with default type which is refered by syntax. constant give  freedom ,对于Numeric 可以不用损失精度 比如PI. 另外叙述了如何表示最大值问题.取反操作(而非类型转换)
+- [x] 16 [constant](https://blog.golang.org/constants) constant is untyped value with default type which is referred by syntax. constant give freedom ,对于Numeric 可以不用损失精度 比如PI. 另外叙述了如何表示最大值问题.取反操作(而非类型转换)
 
 - [x] 17 [Gob Go自有序列化协议](https://blog.golang.org/gobs-of-data) 自描述  不需要额外维护字段信息 节省传输空间 ,proto buffer3个misfeature 1 只支持struct类型 不支持primitive type arrary 2 额外维护字段默认值 3字段分optional 和must不够灵活
 - [x] 18 [Iota玩法](https://blog.learngoprogramming.com/golang-const-type-enums-iota-bc4befd096d3) [iota spec](https://golang.org/ref/spec#Iota)
@@ -202,26 +212,19 @@ channel 有无缓冲. channels of channel ,将每一次请求的数据,数据处
 A leaky buffer : 通过一个buffered channel 在client 和 server端进行通信.
  
 #### Doing
-- [ ] [map 底层原理实现需要看下](https://www.jianshu.com/p/aa0d4808cbb8 https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html)
+- [ ] [map 底层原理实现需要看下][①](https://tiancaiamao.gitbooks.io/go-internals/content/zh/02.3.html) [②](https://www.jianshu.com/p/aa0d4808cbb8)
 - [ ] Go语言机制 https://studygolang.com/subject/74
-- [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency
-- [ ] 9 Go读写文件 
-- [ ] 10 Go select 关键字 https://studygolang.com/articles/12522
+- [ ] 8  并发编程 https://github.com/golang/go/wiki/LearnConcurrency 
+- [ ] [10 Go select 关键字](https://studygolang.com/articles/12522)
 - [ ] 11 Go channel https://studygolang.com/articles/12402
 - [ ] 12 Go mutex 和 WaitGroup 用法
 - [ ] 13 Go mutex 和 WaitGroup 源码分析
-- [ ] 14 GO Ratelimiter https://github.com/golang/go/wiki/RateLimiting
-- [ ] 15 go code review https://github.com/golang/go/wiki/CodeReviewComments
-- [ ] 16 为什么不支持generic http://bit.ly/2wG5zu8
 - [ ] 优秀 article https://github.com/golang/go/wiki/Articles
-https://github.com/golang/go/wiki/LearnServerProgramming 服务端编程  如何写中间件
+https://github.com/golang/go/wiki/LearnServerProgramming 服务端编程  
 
 
 ToDo
 [Testable Examples in Go](https://blog.golang.org/examples)
-
-
- Go泛型话题讨论 http://bit.ly/2wG5zu8
 
 Miscellaneous
 - [x] 1 [GO标准库中文文档](https://studygolang.com/static/pkgdoc/,https://golang.org/pkg/)，这个只能看看库的目录和大致功能，其实没啥用处，直接看英文稳定即可。
@@ -247,7 +250,7 @@ Miscellaneous
 - [x] [Go data structure](https://research.swtch.com/godata)
 - [x] [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
 - [x] [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
-- [x] [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章降的一般,就是error封装 ,simplize and reduce error handle
+- [x] [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章讲的一般,就是error封装 ,simplize and reduce error handle
 - [x] [What happens with closures running as goroutines?](https://golang.org/doc/faq#closures_and_goroutines) 闭包的传参和值引用问题,这个问题好多次了,不想讲了
 - [x] [Why doesn't my program run faster with more CPUs?](https://golang.org/doc/faq#parallel_slow) switch context at the cost of more cpu
 --->[concurrent is not parallelism](https://blog.golang.org/concurrency-is-not-parallelism)
@@ -333,19 +336,16 @@ https://github.com/golang/go/wiki/GoTalks
 https://blog.golang.org/two-recent-go-talks
 https://blog.golang.org/two-recent-go-articles
 PS: 有些需要编码加深记忆， 有些看看总结。
-Go modle教程 https://blog.golang.org/using-go-modules
 
 Go 2.0设计 https://blog.golang.org/toward-go2
 
 https://github.com/golang/go/wiki/LearnErrorHandling
-
 
 https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff
 
 go database sql http://go-database-sql.org/
 
 好blog: 
-
 
 https://blog.golang.org/two-recent-go-talks
 https://www.ardanlabs.com/blog/2017/06/for-range-semantics.html
@@ -358,7 +358,6 @@ https://www.ardanlabs.com/blog/2014/12/using-pointers-in-go.html
 
 https://www.ardanlabs.com/blog/2013/09/iterating-over-slices-in-go.html
 
-
 https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.html
 
 :whale2: :whale2: :whale2: 
@@ -367,7 +366,33 @@ https://www.ardanlabs.com/blog/2013/06/understanding-defer-panic-and-recover.htm
 学Garbage Collector机制 总结
 
 https://blog.golang.org/ismmkeynote
+
 go调度
-https://studygolang.com/articles/14264
+-[x] https://studygolang.com/articles/14264  系统线程抢占式调度  (goroutine协作调度)  cpu缓存  false shareing (
+-[x] https://studygolang.com/articles/15316 go 在 1 create goroutine2  netpoller(异步调用) 3 GC ,4 sys call 需要做调度决策   5 atomic mutex同步调用
+
+引入P M->P->Gqueue 1:1:M, N:M模型. 利用多核以及避免上下文切换 ,  spinging 的 M ,避免 unblock/block ,cpu intense.
+先理解调度设计. https://docs.google.com/document/d/1TTj4T2JO42uD5ID9e89oa0sLKhJYD0Y_kqxDv3I3XMw/edit
+1 single global mutex to protect create complete and reschedule(中心化)
+2 goroutine 在 不同的m(worker thread ) 之间hand off goroutine 带来的系统开销
+3 M的mcache associate with all M, not just a specific M  running go code, 1:100 ,mcache up to 2m比较昂贵, 以及poor data locality
+4 aggressive thread 频繁的系统调用 unblock/block
+
+新版本 引入 P, 去中心化  以及  让每个m 保持负载, 而不至于IDLE , 通过工作窃取模式  lockOSThread  通过自旋sping 而不是block/unblock,
+让每一个P 和 每一个G  execute on last running P和M上面,那样可以可以cache line
+
+具体调度机制可以参考这票: https://rakyll.org/scheduler/
+
+-[x] https://studygolang.com/articles/17014
+-[x] https://assets.ctfassets.net/oxjq45e8ilak/48lwQdnyDJr2O64KUsUB5V/5d8343da0119045c4b26eb65a83e786f/100545_516729073_DMITRII_VIUKOV_Go_scheduler_Implementing_language_with_lightweight_concurrency.pdf
+
 go垃圾回收
 https://studygolang.com/articles/21569
+三色标记 加 write barrier
+http://legendtkl.com/2017/04/28/golang-gc/
+https://making.pusher.com/golangs-real-time-gc-in-theory-and-practice/
+-[X] https://studygolang.com/articles/14264
+
+https://i6448038.github.io/2019/04/11/go-channel/
+
+https://draveness.me/golang/concurrency/golang-channel.html

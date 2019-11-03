@@ -2,7 +2,6 @@ package concurrent
 
 import (
 	"fmt"
-	"time"
 )
 
 func ChanInChan() {
@@ -30,7 +29,7 @@ var c = make(chan int)
 var helloStr string
 
 func f() {
-	time.After()
+	//time.After();
 	helloStr = "hello, world" //1
 	<-c                       //2
 }
