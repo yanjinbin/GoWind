@@ -5,6 +5,7 @@ import (
 	"GoWind/sdk"
 	"GoWind/semantics"
 	"fmt"
+	"math/rand"
 	"sync"
 	"testing"
 	"time"
@@ -282,7 +283,8 @@ func TestAppend1(t *testing.T) {
 }
 
 func TestMutex(t *testing.T) {
-	Mutex()
+	// Mutex()
+	Mutex01()
 }
 
 func TestCond(t *testing.T) {
@@ -291,4 +293,13 @@ func TestCond(t *testing.T) {
 
 func TestOnceDo(t *testing.T) {
 	OnceDo()
+}
+
+func TestFastRandom(t *testing.T) {
+	var N uint64 = 100
+	var U uint64 = rand.Uint64()
+	ret := (U * N) >> 32
+
+	fmt.Println(ret)
+	fmt.Println(4 >> 1)
 }

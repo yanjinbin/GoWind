@@ -7,8 +7,7 @@ package main
 
 import (
 	"expvar"
-	"gotraining/topics/go/profiling/project/service"
-
+	"fmt"
 	"log"
 	_ "net/http/pprof"
 	"os"
@@ -37,6 +36,7 @@ func expvars() {
 
 // main is the entry point for the application.
 func main() {
-	expvars()
-	service.Run()
+	fmt.Println(1e6)
+	//	expvars()
+	//service.Run()
 }

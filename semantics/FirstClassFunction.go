@@ -83,17 +83,19 @@ func FirstClassFunction() {
 
 	// Why are maps, slices, and channels references while arrays are values?
 	// 数组和slice 区别 https://www.cnblogs.com/howDo/archive/2013/04/25/GoLang-Array-Slice.html
+	fmt.Println("====值拷贝和引用拷贝的区别===")
 	ints_slice := []int{1, 2, 3, 4}
 	ints_slice_bak := ints_slice
 	ints_slice[1] = 10
-	fmt.Println(ints_slice, "\n", ints_slice_bak)
+	fmt.Println(ints_slice, "\t", ints_slice_bak)
 	ints_array := [3]int{10, 9, 12}
 	ints_array_bak := ints_array
 	ints_array[1] = 100
-	fmt.Println(ints_array, "\n", ints_array_bak)
+	fmt.Println(ints_array, "\t", ints_array_bak)
 
 	// range trick
 	// https://xiaozhou.net/something-about-range-of-go-2016-04-10.html#more
+	fmt.Println("====range的坑=====")
 	list := []Foo{
 		{"A"},
 		{"B"},
@@ -128,16 +130,16 @@ func FirstClassFunction() {
 	fmt.Println("闭包坑")
 	ss := []int{987, 654, 321}
 
-	// 第一种情况，很正常，输出0，1，2，3，4
+	// 第一种情况，很正常，输出0，1，2
 	for i, v := range ss {
-		fmt.Println(i, "①", v)
+		fmt.Println("①", i, "\t", v)
 	}
 
-	//第二种情况，典型的Go语言闭包，它捕获了变量i，但是要注意的是它持有的是引用不是拷贝，当for循环结束时，i=4
+	//第二种情况，典型的Go语言闭包，它捕获了变量i，但是要注意的是它持有的是引用不是拷贝，当for循环结束时，i=2
 	//所以闭包输出的结果都是4
 	for i, v := range ss {
 		defer func() {
-			fmt.Println(i, "②", v)
+			fmt.Println("②", i, "\t", v)
 		}()
 	}
 
@@ -145,7 +147,7 @@ func FirstClassFunction() {
 	//所以其结果是4，3，2，1，0
 	for i, v := range ss {
 		defer func(i int, v int) {
-			fmt.Println(i, "③", v)
+			fmt.Println("③", i, "\t", v)
 		}(i, v)
 	}
 

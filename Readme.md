@@ -89,7 +89,9 @@ Go memory model 另外叙述。
 
 - [x] 13 [Err are values]( https://blog.golang.org/errors-are-values) Rob Pike 首先提出观点err are values,并展示一般的处理方法,区别于一般的try-catch-finally,再通过一个在tokyo会上的故事讲述如何优雅处理err的一个实践例子--->errWriter。这个最佳实践也被用在sdk bufio writer archive等包中。
 
-- [x] 14 [Go Slices: usage and internals](https://blog.golang.org/go-slices-usage-and-internals) slice内部meta属性维护指向array关系，slice按需增长,不用担心index out of range。另外，有个possible gotcha 就是 因为slice 指向array. 如果array 过大(通常发生在读取大文件时候)， 这时候可以使用append函数。主要是丢弃array,或者说array-->slice ,slice之间用append合并。
+- [x] 14 [Go Slices: usage and internals](https://blog.golang.org/go-slices-usage-and-internals) slice内部meta属性维护指向array关系，slice按需增长,不用担心index out of range。
+另外，有个possible gotcha 就是 因为slice 指向array. 如果array 过大(通常发生在读取大文件时候)， 
+这时候可以使用append函数。主要是丢弃array,或者说array-->slice ,slice之间用append合并。
 
 - [x] 15 [JSON and Go](https://blog.golang.org/json-and-go) 讲述 json规范 marshal和unmarshal 以及go如何将复杂的json denote struct type. 
 encode原则
@@ -348,7 +350,6 @@ go database sql http://go-database-sql.org/
 好blog: 
 
 https://blog.golang.org/two-recent-go-talks
-https://www.ardanlabs.com/blog/2017/06/for-range-semantics.html
 
 https://www.ardanlabs.com/blog/2014/10/error-handling-in-go-part-i.html
 
@@ -396,3 +397,113 @@ https://making.pusher.com/golangs-real-time-gc-in-theory-and-practice/
 https://i6448038.github.io/2019/04/11/go-channel/
 
 https://draveness.me/golang/concurrency/golang-channel.html
+
+-[X] https://studygolang.com/articles/12607
+
+https://www.cnblogs.com/xd502djj/archive/2011/03/01/1968041.html
+https://www.cnblogs.com/pengdonglin137/p/3315124.html
+
+并发工具学习 
+mutex  CAS获取锁 spin (正常锁状态和非饥饿状态下)  ,
+  如果饥饿状态下(等待时间超过1ms)或者不能spin,
+ 通过标记位运算判断去判断,以及是否要清楚饥饿状态
+http://legendtkl.com/2016/10/23/golang-mutex/ 
+> 总结的不错:  Mutex 两种工作模式，
+normal 正常模式，starvation 饥饿模式。
+normal 情况下锁的逻辑与老版相似，休眠的 goroutine 以 FIFO 链表形式保存在 sudog 中，
+被唤醒的 goroutine 与新到来活跃的 goroutine 竞解，
+但是很可能会失败。如果一个 goroutine 等待超过 1ms，那么 Mutex 进入饥饿模式
+饥饿模式下，解锁后，锁直接交给 waiter FIFO 链表的第一个，新来的活跃 goroutine 不参与竞争，并放到 FIFO 队尾
+如果当前获得锁的 goroutine 是 FIFO 队尾，或是等待时长小于 1ms，那么退出饥饿模式
+normal 模式下性能是比较好的，但是 starvation 模式能减小长尾 latency
+
+https://www.jianshu.com/p/ce1553cc5b4f (有关是否能自旋的解释)
+https://colobu.com/2018/12/18/dive-into-sync-mutex/ (代码解释的比较不错)
+https://studygolang.com/articles/12598  (怎么使用)
+
+
+once: gmm定义的 Multiple threads can execute once.Do(f) for a particular f, 
+but only one will run f(), and the other calls block until f() has returned.
+
+>  // Note: Here is an incorrect implementation of Do:
+ 	//
+ 	//	if atomic.CompareAndSwapUint32(&o.done, 0, 1) {
+ 	//		f()
+ 	//	}
+>  //  Do guarantees that when it returns, f has finished.
+  // This implementation would not implement that guarantee:
+  // given two simultaneous calls, the winner of the cas would
+  // call f, and the second would return immediately, without
+  // waiting for the first's call to f to complete.
+  // This is why the slow path falls back to a mutex, and why
+  // the atomic.StoreUint32 must be delayed until after f returns
+
+https://studygolang.com/articles/7270
+
+ WaitGroup 
+
+ [X]https://www.cnblogs.com/jiangz222/p/10348763.html
+ [X]https://segmentfault.com/a/1190000014342297
+ 下面这篇讲的很好
+ [X]http://cbsheng.github.io/posts/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9A%E7%94%A8sync.waitgroup%E5%90%97/
+ 
+ 
+ Select机制  [select的语义](https://segmentfault.com/a/1190000006815341)
+ 
+
+Time Wait CLOSE WAIT
+https://www.cnblogs.com/kevingrace/p/9988354.html
+
+协程退出
+[https://segmentfault.com/a/1190000017251049](协程如何退出)
+
+context包 https://learnku.com/articles/29877
+
+Select底层调用的函数 case描述 scase
+https://i6448038.github.io/2019/03/23/go-select-principle/
+> 以上这三个函数的调用栈按顺序如下：
+  func Select(cases []SelectCase) (chosen int, recv Value, recvOK bool) // value.go 文件
+  func rselect([]runtimeSelect) (chosen int, recvOK bool) //  value.go
+  func reflect_rselect(cases []runtimeSelect) (int, bool) // select.go
+  func selectgo(cas0 *scase, order0 *uint16, ncases int) (int, bool) // select.go文件
+
+
+https://draveness.me/golang-select.html
+
+https://www.cnblogs.com/itech/archive/2012/03/05/2380794.html
+https://studygolang.com/articles/17940
+
+ 
+
+线程池:https://studygolang.com/articles/12512
+
+ 内存泄漏
+ https://segmentfault.com/a/1190000019222661
+ time after超时控制
+ https://segmentfault.com/a/1190000015084958
+ 为什么CSP
+ https://golang.org/doc/effective_go.html#concurrency
+ 
+ https://www.ardanlabs.com/all-posts/
+ 
+ 
+ 
+ map底层原理
+ -[x]https://segmentfault.com/a/1190000018380327 6.5 
+ 
+ cpu 亲缘性 https://www.cnblogs.com/lubinlew/p/cpu_affinity.html
+ 
+ 
+ 
+ 理解顺序: channel(https://draveness.me/golang-channel)
+ 附:ep 是传送的消息
+ -->select(https://draveness.me/golang-select.html)
+ mutex--->once--->WaitGroup
+ 
+ 
+ -[ ] Mutex、RWMutex、WaitGroup、Once 和 Cond 以及扩展原语 ErrGroup、Semaphore和 SingleFlight 的实现原理
+ https://draveness.me/golang-sync-primitives
+ 
+ -[ ] GMP https://draveness.me/golang-goroutine
+ -[ ] Context https://draveness.me/golang-context
+ -[ ] Timer https://draveness.me/golang-timer
