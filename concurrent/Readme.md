@@ -31,7 +31,6 @@ https://github.com/golang/go/wiki/LearnConcurrency
  
  go blog 中文翻译写得还不错的文章
  https://segmentfault.com/a/1190000006815341
- https://segmentfault.com/a/1190000006744213
  https://segmentfault.com/a/1190000006670880
  https://segmentfault.com/a/1190000006261218
 
@@ -55,8 +54,7 @@ https://github.com/golang/go/wiki/Articles#concurrency--channels
 https://blog.golang.org/concurrency-is-not-parallelism
 https://blog.golang.org/advanced-go-concurrency-patterns
 https://blog.golang.org/context
-https://talks.golang.org/2012/concurrency.slide#1
-https://segmentfault.com/a/1190000006744213
+https://talks.golang.org/2012/concurrency.slide
 https://github.com/golang/go/wiki/MutexOrChannel
 
 

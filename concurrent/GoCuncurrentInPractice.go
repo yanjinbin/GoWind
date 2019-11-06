@@ -36,5 +36,5 @@ func Command() {
 			bf.Write(buffer)
 		}
 	}
-	fmt.Printf("content", bf.String())
+	fmt.Println("content", bf.String())
 }

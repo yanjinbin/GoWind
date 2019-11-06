@@ -34,7 +34,7 @@ func Synchronous() {
 	<-c
 }
 
-/*func handle(r *http.Request) {
+/*func handle02(r *http.Request) {
 	sem <- 1   // Wait for active queue to drain.
 	process(r) // May take a long time.
 	<-sem      // Done; enable next request to run.
@@ -49,7 +49,7 @@ func process(r *http.Request) {
 func ServeBug(queue chan *http.Request) {
 	for {
 		req := <-queue
-		go handle(req) // Don't wait for handle to finish.
+		go handle02(req) // Don't wait for handle02 to finish.
 	}
 }*/
 
@@ -66,7 +66,7 @@ func Serve(queue chan *http.Request) {
 func ServeQuit(clientRequests chan *http.Request, MaxOutstanding int, quit chan bool) {
 	// Start handlers
 	for i := 0; i < MaxOutstanding; i++ {
-		// go handle(clientRequests)
+		// go handle02(clientRequests)
 	}
 	<-quit // Wait to be told to exit.
 }
@@ -94,12 +94,12 @@ func ChannelsOfChannels() {
 	request := &Request{[]int{3, 4, 5}, sum, make(chan int)}
 	// Send request
 	clientRequests <- request
-	handle(clientRequests)
+	handle02(clientRequests)
 	// Wait for response.
 	fmt.Printf("answer: %d\n", <-request.resultChan)
 }
 
-func handle(queue chan *Request) {
+func handle02(queue chan *Request) {
 	for req := range queue {
 		req.resultChan <- req.f(req.args)
 	}

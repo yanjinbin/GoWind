@@ -1,17 +1,17 @@
 package main
 
 import (
-"context"
-"encoding/xml"
-"fmt"
-"io/ioutil"
-"log"
-"os"
-"runtime"
-"runtime/trace"
-"strings"
-"sync"
-"sync/atomic"
+	"context"
+	"encoding/xml"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"runtime"
+	"runtime/trace"
+	"strings"
+	"sync"
+	"sync/atomic"
 )
 
 type (
@@ -405,4 +405,3 @@ func freqActor(topic string, docs []string) int {
 	wg.Wait()
 	return found
 }
-

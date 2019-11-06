@@ -467,6 +467,7 @@ https://i6448038.github.io/2019/03/23/go-select-principle/
   func reflect_rselect(cases []runtimeSelect) (int, bool) // select.go
   func selectgo(cas0 *scase, order0 *uint16, ncases int) (int, bool) // select.go文件
 
+goroutine在select循环中的的唤醒和阻塞,以及case 编译器的优化,优化成if语句.然后运行期对send/receive/nil/default chan的实现
 
 https://draveness.me/golang-select.html
 
@@ -489,21 +490,24 @@ https://studygolang.com/articles/17940
  
  
  map底层原理
- -[x]https://segmentfault.com/a/1190000018380327 6.5 
+ -[x] https://segmentfault.com/a/1190000018380327    Loadfactor 6.5  resize是x2
  
  cpu 亲缘性 https://www.cnblogs.com/lubinlew/p/cpu_affinity.html
  
  
- 
- 理解顺序: channel(https://draveness.me/golang-channel)
+
+ > 理解顺序: channel(https://draveness.me/golang-channel)(hcan entity)
  附:ep 是传送的消息
- -->select(https://draveness.me/golang-select.html)
- mutex--->once--->WaitGroup
+ -->select(https://draveness.me/golang-select.html) (scase)
+ mutex--->once---> WaitGroup(v/w,阻塞和v=0的时候逐个唤醒)
  
  
- -[ ] Mutex、RWMutex、WaitGroup、Once 和 Cond 以及扩展原语 ErrGroup、Semaphore和 SingleFlight 的实现原理
- https://draveness.me/golang-sync-primitives
+ -[x] Mutex、RWMutex、WaitGroup、Once 和 Cond 以及扩展原语 ErrGroup、Semaphore和 SingleFlight 的实现原理
  
- -[ ] GMP https://draveness.me/golang-goroutine
- -[ ] Context https://draveness.me/golang-context
- -[ ] Timer https://draveness.me/golang-timer
+ -[x] Context https://draveness.me/golang-context 
+ -[x] Context包 https://www.cnblogs.com/qcrao-2018/p/11007503.html
+ -[x] Go定时器, Timer https://draveness.me/golang-timer
+  > timer对象 根据pid,在64个分桶上找到自己的位置,然后,根据pid 定位timersBuckets(是个四叉堆),然后append) timer和ticker区别就是多了个peorid 以及在
+ timerproc处理的时候多了一层对peroid的处理,然后将heap index = 0 ;
+>
+>GMP https://draveness.me/golang-goroutine

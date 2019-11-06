@@ -303,3 +303,15 @@ func TestFastRandom(t *testing.T) {
 	fmt.Println(ret)
 	fmt.Println(4 >> 1)
 }
+
+func TestCtx(t *testing.T) {
+	Ctx()
+}
+
+func TestSelect(t *testing.T) {
+	SelectTry()
+}
+
+func TestCondition(t *testing.T) {
+	Condition()
+}
