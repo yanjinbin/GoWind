@@ -58,6 +58,8 @@ func TestPolymorphismComposite(t *testing.T) {
 
 func TestDefer(t *testing.T) {
 	semantics.Defer()
+	semantics.WhenParamCal01()
+	semantics.WhenParamCal01()
 }
 
 func TestPanicRecover(t *testing.T) {
@@ -284,7 +286,10 @@ func TestAppend1(t *testing.T) {
 
 func TestMutex(t *testing.T) {
 	// Mutex()
-	Mutex01()
+	// Mutex01()
+	// DoSth01()
+	// DoSth02()
+	DoSth03()
 }
 
 func TestCond(t *testing.T) {
@@ -314,4 +319,30 @@ func TestSelect(t *testing.T) {
 
 func TestCondition(t *testing.T) {
 	Condition()
+}
+
+func TestPool(t *testing.T) {
+	Pool()
+}
+
+func TestTime(t *testing.T) {
+	// sdk.Time()
+	s := time.Now()
+	e := time.Now()
+	fmt.Println(e.Sub(s))
+	e2 := time.Now()
+
+	fmt.Println(s, e, e2)
+	e3 := e2.Add(-1 * time.Nanosecond)
+	fmt.Println(e3.Sub(e2))
+	e2.Equal(s)
+}
+
+func TestMisc(t *testing.T) {
+	semantics.SliceGrowTrick01()
+	fmt.Println("===体会不同=====")
+	semantics.SliceGrowTrick02()
+	fmt.Println("===体会不同=====")
+	semantics.SliceGrowTrick03()
+	fmt.Println(4 << (^uintptr(0) >> 63))
 }

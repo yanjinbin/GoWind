@@ -108,4 +108,49 @@ func AppendDigits(filename string) ([]byte, error) {
 	return digits, nil
 }
 
-// TO 根据上面改写,有个疑问GC什么时候回收呢,这就引申到GC topic了.
+func SliceGrowTrick01() {
+	array := [4]int{10, 20, 30, 40}
+	fmt.Println(array)
+	slice := array[0:2]
+	fmt.Println(slice)
+	newSlice := append(slice, 50)
+	fmt.Printf("before array=%v, pointer=%p, len=%d\n", array, &array, len(array))
+	fmt.Printf("Before slice = %v, Pointer = %p, len = %d, cap = %d\n", slice, &slice, len(slice), cap(slice))
+	fmt.Printf("Before newSlice = %v, Pointer = %p, len = %d, cap = %d\n", newSlice, &newSlice, len(newSlice), cap(newSlice))
+	newSlice[1] += 10
+	fmt.Printf("After slice = %v, Pointer = %p, len = %d, cap = %d\n", slice, &slice, len(slice), cap(slice))
+	fmt.Printf("After newSlice = %v, Pointer = %p, len = %d, cap = %d\n", newSlice, &newSlice, len(newSlice), cap(newSlice))
+	fmt.Printf("After array = %v\n", array)
+}
+
+func SliceGrowTrick02() {
+	array := [4]int{10, 20, 30, 40}
+	fmt.Println(array)
+	slice := array[0:2]
+	fmt.Println(slice)
+	newSlice := append(slice, 50, 99, 22, 33, 44, 77, 88, 11)
+	fmt.Printf("before array=%v, pointer=%p, len=%d\n", array, &array, len(array))
+	fmt.Printf("Before slice = %v, Pointer = %p, len = %d, cap = %d\n", slice, &slice, len(slice), cap(slice))
+	fmt.Printf("Before newSlice = %v, Pointer = %p, len = %d, cap = %d\n", newSlice, &newSlice, len(newSlice), cap(newSlice))
+	newSlice[1] += 10
+	fmt.Printf("After slice = %v, Pointer = %p, len = %d, cap = %d\n", slice, &slice, len(slice), cap(slice))
+	fmt.Printf("After newSlice = %v, Pointer = %p, len = %d, cap = %d\n", newSlice, &newSlice, len(newSlice), cap(newSlice))
+	fmt.Printf("After array = %v\n", array)
+	fmt.Println("上面slice的修改并不会对array有影响")
+}
+
+func SliceGrowTrick03() {
+	array := []int{10, 20, 30, 40}
+	fmt.Println(array)
+	slice := array[0:2]
+	fmt.Println(slice)
+	newSlice := append(slice, 50)
+	fmt.Printf("before array=%v, pointer=%p, len=%d\n", array, &array, len(array))
+	fmt.Printf("Before slice = %v, Pointer = %p, len = %d, cap = %d\n", slice, &slice, len(slice), cap(slice))
+	fmt.Printf("Before newSlice = %v, Pointer = %p, len = %d, cap = %d\n", newSlice, &newSlice, len(newSlice), cap(newSlice))
+	newSlice[1] += 10
+	fmt.Printf("After slice = %v, Pointer = %p, len = %d, cap = %d\n", slice, &slice, len(slice), cap(slice))
+	fmt.Printf("After newSlice = %v, Pointer = %p, len = %d, cap = %d\n", newSlice, &newSlice, len(newSlice), cap(newSlice))
+	fmt.Printf("After array = %v\n", array)
+	fmt.Println("更有意思了，修改了array变量")
+}

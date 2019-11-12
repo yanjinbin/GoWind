@@ -1,5 +1,4 @@
 ### Go 辨析 
-
 引言
 ``搜集常犯的错误,其实会和其他专题有重叠处``
 
@@ -11,4 +10,3 @@ https://github.com/golang/go/wiki/SliceTricks
 // common mistakes 
 https://github.com/golang/go/wiki/CommonMistakes
 
-https://golang.org/doc/faq#nil_error

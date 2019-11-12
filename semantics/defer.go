@@ -240,3 +240,35 @@ func do() error {
 
 	return nil
 }
+
+// 传的是实参还是形参有很大区别哦
+func WhenParamCal01() {
+	num := 42
+
+	defer func() {
+		// num: 13 because it sees the latest state of the variable
+		// through its surrounding context before the func returns
+		fmt.Println("defer func: num:", num)
+	}()
+
+	// overwrite num
+	num = 13
+
+	fmt.Println("main: num:", num)
+
+	// deferred func is executed here
+	// the recent value of num is 13
+	// so, the defer will see it as 13, not 42
+}
+
+func printA(a int) {
+	fmt.Println("value of a in deferred function", a)
+}
+
+func WhenParamCal02() {
+	a := 5
+	defer printA(a)
+	a = 10
+	fmt.Println("value of a before deferred function call", a)
+
+}

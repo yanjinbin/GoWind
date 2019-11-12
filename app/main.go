@@ -1,6 +1,7 @@
-package app
+package main
 
 import (
+	"fmt"
 	"sync"
 )
 
@@ -79,17 +80,34 @@ func watch(ctx context.Context, name string) {
 	}
 }*/
 
-var l sync.Mutex
-var b string = "abcd"
-
-func ff() {
-	b = "hello, world"
-	l.Unlock()
-}
+var rw sync.RWMutex
+var wg sync.WaitGroup
 
 func main() {
-	l.Lock()
-	go ff()
-	l.Lock()
-	print(b)
+	N := 15
+	wg.Add(N)
+	for i := 0; i < N; i++ {
+		if i&1 == 1 {
+			go EXRead(i)
+		} else {
+			go SRead(i)
+		}
+	}
+	wg.Wait()
+	//time.Sleep(20*time.Second)
+
+}
+
+func EXRead(i int) {
+	defer wg.Done()
+	rw.Lock()
+	fmt.Printf("EX打印%d\n", i)
+	rw.Unlock()
+}
+
+func SRead(i int) {
+	defer wg.Done()
+	rw.RLock()
+	fmt.Printf("SR打印%d\n", i)
+	rw.RUnlock()
 }
