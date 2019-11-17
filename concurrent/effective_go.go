@@ -7,10 +7,10 @@ import (
 	"time"
 )
 
-type Signal int
+type signal int
 
 const (
-	Exit Signal = iota
+	Exit signal = iota
 	Crash
 	Done
 	Abnormal
@@ -22,7 +22,7 @@ const (
 var sem = make(chan int, 10)
 
 func Synchronous() {
-	c := make(chan Signal)
+	c := make(chan signal)
 	fmt.Println("①", time.Now())
 	go func() {
 		time.Sleep(5 * time.Second)

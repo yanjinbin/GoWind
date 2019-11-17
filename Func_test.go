@@ -6,6 +6,7 @@ import (
 	"GoWind/semantics"
 	"fmt"
 	"math/rand"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -338,6 +339,14 @@ func TestTime(t *testing.T) {
 	e2.Equal(s)
 }
 
+const (
+	mutexLocked = 1 << iota // mutex is locked
+	mutexWoken
+	mutexStarving
+	mutexWaiterShift      = iota
+	starvationThresholdNs = 1e6
+)
+
 func TestMisc(t *testing.T) {
 	semantics.SliceGrowTrick01()
 	fmt.Println("===体会不同=====")
@@ -345,4 +354,27 @@ func TestMisc(t *testing.T) {
 	fmt.Println("===体会不同=====")
 	semantics.SliceGrowTrick03()
 	fmt.Println(4 << (^uintptr(0) >> 63))
+	const i int = iota
+	fmt.Println("======")
+	fmt.Println(i)
+	fmt.Println(4 >> i)
+	fmt.Println(mutexWaiterShift == 3)
+	fmt.Println(mutexLocked, mutexWoken, mutexStarving, mutexWaiterShift, starvationThresholdNs)
+}
+
+func TestMUTEX(T *testing.T) {
+
+	var mu sync.Mutex
+	go func() {
+		mu.Lock()
+		time.Sleep(10 * time.Second)
+		mu.Unlock()
+	}()
+	time.Sleep(time.Second)
+	mu.Unlock()
+	select {}
+
+	var s strings.Builder
+	s.WriteString("aa")
+
 }

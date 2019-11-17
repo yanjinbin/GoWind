@@ -3,7 +3,7 @@ package concurrent
 import (
 	"fmt"
 	"os"
-	"os/signal"
+	. "os/signal"
 	"sync"
 	"time"
 )
@@ -15,12 +15,12 @@ func Condition() {
 		go listen(c, i)
 	}
 
-	time.Sleep(5 * time.Second)
+	time.Sleep(3 * time.Second)
 
 	go broadcast(c)
 
 	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt)
+	Notify(ch, os.Interrupt)
 	<-ch
 }
 
@@ -30,10 +30,18 @@ func broadcast(c *sync.Cond) {
 	c.L.Unlock()
 }
 
+func OneSignal(c *sync.Cond) {
+	c.L.Lock()
+	c.Signal()
+	c.L.Unlock()
+}
+
 func listen(c *sync.Cond, i int) {
 	c.L.Lock()
 	// 不能假设condition条件为真啊
 	// 所以需要lock,wait内部第一次先调用unlock 然后又再次lock
+	fmt.Println(i)
+	time.Sleep(time.Duration(12-i) * time.Microsecond)
 	c.Wait()
 	fmt.Println("listen\t", i)
 	c.L.Unlock()

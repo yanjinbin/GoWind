@@ -7,13 +7,13 @@ enthusiasm definition: a thing that arouses feelings of intense and eager enjoym
 :bulb::seedling::bike::cn:
 目标: 夯实基础，学习更多的Go语言特性
 
-1. 关注gopheracdemy ardanlabs 以及GCTT（Go国内翻译小组挑选的文章）
+1. 关注Gopheracdemy Ardanlabs 以及GCTT（Go国内翻译小组挑选的文章）
 
-2. 学习golang wiki里面的东西
+2. 学习Go wiki里面的东西
 
-3. 每周关注golang weekly news
+3. 每周关注Golang weekly news
 
-4. Golang issue里面也有很多东西, 但是有些写的indirect,
+4. Go issue里面也有很多东西, 但是有些写的比较indirect,
 
 > Reference:
 > 1. [Golang Wiki](https://github.com/golang/go/wiki) 
@@ -77,8 +77,13 @@ Golang的组合和多态玩法,没有继承特性 ,组合实现继承,接口实�
 
 - [x] 11 [文件读取](https://studygolang.com/articles/14669) 读取整个文件ioutil 分块读取bus read 逐行读取  buf scanner [文件写入](https://studygolang.com/articles/19475) 并发写
 
-- [x] 12  [Go FAQ](https://golang.org/doc/faq) 读后感: new make区别 一个allocate mem，一个还要继续 initialize ,struct type 不能和nil 做compare 操作，array是值类型。但是slice map channel都是引用类型，不过要强调一点是go都是按值传递 you see is what you want, 另外就是method receiver, where value reciever function, the same is pointer receiver，opposite not work! 需要说明的，如果value receiver 用在pointer receiver上，Go 会自动给她加上&。其他就是Go 语言设计思想了 goroutine 取代thread csp 模型, mutex sync包.取消泛型,同样需要GC。
-Go memory model 另外叙述。
+- [x] 12  [Go FAQ](https://golang.org/doc/faq) 
+>读后感: new make区别 一个allocate mem，一个还要继续 initialize ,struct type 不能和nil 做compare 操作，array是值类型。
+但是slice map channel都是引用类型，不过要强调一点是go都是按值传递 you see is what you want, 
+另外就是method receiver, where value receiver function, the same is pointer receiver，opposite not work!
+需要说明的，如果value receiver 用在pointer receiver上，Go 会自动给她加上&。
+其他就是Go 语言设计思想了 G的CSP 取代 Thread, mutex sync包.取消泛型,
+同样需要GC。Go memory model 另外叙述。
 
 - [x] 13 [Err are values]( https://blog.golang.org/errors-are-values) Rob Pike 首先提出观点err are values,并展示一般的处理方法,区别于一般的try-catch-finally,再通过一个在tokyo会上的故事讲述如何优雅处理err的一个实践例子--->errWriter。这个最佳实践也被用在sdk bufio writer archive等包中。
 
@@ -102,83 +107,7 @@ decode原则
 - [x] 18 [Iota玩法](https://blog.learngoprogramming.com/golang-const-type-enums-iota-bc4befd096d3) [iota spec](https://golang.org/ref/spec#Iota)
 iota的基本套路 1 create new Type ---> 2 Declare related constants for new Type  玩法 1 递增  2 递减 3 幂级扩大 4 重置 , iota+1 initialize
 
-- [x] 19 [Go Map玩法](https://blog.golang.org/go-maps-in-action),map常用玩法 , key type 必须可以compare , 然后, 读写锁实现并发安全,不保证遍历顺序.
-
-- [x] 20 [Go memory model](https://golang.org/ref/mem) 
-1 happen before 规则讲述reorder 满足 某种partial order,那么 can read the desired value when write happening
-2 synchronization 规则 
-2.1 init()函数的顺序 
-2.2  goroutine create happen before created goroutine begin execute
-2.3  goroutine exit not guaranteed to happen before any event.if necessary,use lock or channel communication 
-3  channel communication 
- Each send on a particular channel is matched to a corresponding receive from that channel, usually in a **different** goroutine. 
- tips: 注意 receive 和 send 是different goroutine
-
-```go
-var c = make(chan int, 10)
-var a string
-
-func f() {
-	a = "hello, world"
-	c <- 0
-}
-
-func main() {
-	go f()
-	<-c
-	print(a)
-}
-```
-
-
-> The closing of a channel happens before a receive that returns a zero value because the channel is closed.
-
-> In the previous example, replacing c <- 0 with close(c) yields a program with the same guaranteed behavior.
-
-高能预警.....
-
-A receive from an unbuffered channel happens before the send on that channel completes.
-
-注意是unbuffered channel哦 
-
-demo如下
-
-```go
-var c = make(chan int)
-var a string
-
-func f() {
-	a = "hello, world"
-	<-c
-}
-func main() {
-	go f()
-	c <- 0
-	print(a)
-}
-```
-
-
-那么接下来,对于buffered channel呢,规则如下
-The kth receive on a channel with capacity C happens before the k+Cth send from that channel completes
-
-
->This rule generalizes the previous rule to buffered channels. It allows a counting semaphore to be modeled by a buffered channel: the number of items in the channel corresponds to the number of active uses, the capacity of the channel corresponds to the maximum number of simultaneous uses, sending an item acquires the semaphore, and receiving an item releases the semaphore. This is a common idiom for limiting concurrency.
- 
-这段废话讲述的是 可以用buffered channel 构建semaphore 同步工具类.
-
-锁(mutex)和读写锁(mutex)
-对于锁,系铃还需解铃人(反过来了),那么这段话可以很好理解了.
-> For any sync.Mutex or sync.RWMutex variable l and n < m, call n of l.Unlock() happens before call m of l.Lock() returns.
-
-if m > n, n个unlock happen before 于 lock()
-
-对于读写锁呢, 除了解锁Happen before加锁之外，还要做到读写互斥，写写互斥和写读互斥。
-
-
-
-最后是once 起始就是用mutex 和done标记位加上double check实现只做一次function
-
+- [x] 19 [Go Map玩法](https://blog.golang.org/go-maps-in-action),map常用玩法，key type 必须可以compare。然后，读写锁实现并发安全，不保证遍历顺序.
 
 - [x] [defer 配合匿名函数的闭包的几个坑 注意理解defer的3个规则](https://studygolang.com/articles/12061,https://studygolang.com/articles/12136,https://studygolang.com/articles/12319)
 [Defer spec](https://golang.org/ref/spec#Defer_statements)
@@ -200,6 +129,7 @@ Each time a "defer" statement executes, the function value and parameters to the
 
 - [x] [????? Go单例模式](https://www.ardanlabs.com/blog/2013/07/singleton-design-pattern-in-go.html)
 这篇主要讲如何实现goroutine safe的资源load,维护一个私有的变量map,读取只会一次,之后不会改变。没看懂，单例模式和java的单例模式完全概念不同。这篇文章讲的主要是单列模式管理资源如何设计。
+
 - [x] [right handle nil ](https://golang.org/doc/faq#nil_error)
 
 >nil 必须explicit return, 因为nil的定义是 type和value必须都是nil, 不能type是个类型,而value is not set 
@@ -232,91 +162,104 @@ Miscellaneous
 - [x] 4 [Go data race检测](https://golang.org/doc/articles/race_detector.html,https://brantou.github.io/2017/05/23/go-race-detector/) 用build tag 排除某些包的检测 参考这个[链接戳我](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
     go build run test -race 用build constraint 去除某些包的data race检测 .rac 会成倍性能损耗的.
 - [x] 5 [从其他语言迁移到Go的Gopher需要维持的信仰Or原则](https://blog.rubylearning.com/best-practices-for-a-new-go-developer-8660384302fc)
- > Understand the power of interfaces, they are one of Go’s great gifts, potentially more important than channels or goroutines.
- > If you are coming from another language, be it a dynamic language like Python or Ruby, or a compiled language like Java or C#, leave your OO baggage at the door. Go is an object-oriented language, but it is not a class-based language and does not support inheritance.
- 
- >By removing inheritance from the language, the opportunity to practice the mantra of composition over inheritance is made manifest, and fighting it will only lead to frustration.
- 
- >If you’re waiting for generic types and functions to be added to the language, my advice is to stop holding your breath and learn to love the language we have today.
- 
  >With the 5th point release done, and the 6th on the way in a few months, the possibilities of a new language feature or syntax tweak are remote. The focus from here on out is tools, reliability, and performance.
-- [x] [Godoc约定](https://blog.golang.org/godoc-documenting-go-code) Godoc约定 depreciate bug author 第一行展示
-- [x] [组织你的GO代码](https://blog.golang.org/organizing-go-code)
-- [x] [Go debug](https://blog.golang.org/debugging-what-you-deploy) Goland断掉调试背后就是DELVE
-- [x] [Arrays, slices (and strings): The mechanics of 'append'
+- [x] 6 [Godoc约定](https://blog.golang.org/godoc-documenting-go-code) Godoc约定 depreciate bug author 第一行展示
+- [x] 7 [组织你的GO代码](https://blog.golang.org/organizing-go-code)
+- [x] 8 [Go debug](https://blog.golang.org/debugging-what-you-deploy) Goland断掉调试背后就是DELVE
+- [x] 9 [Arrays, slices (and strings): The mechanics of 'append'
 ](https://blog.golang.org/slices) 这篇和DONE列表里面讲的其实差不多,相当于前面几篇汇总 包括copy append make 内建函数 string 额外用法
-- [x] [Go data structure](https://research.swtch.com/godata)
-- [x] [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
-- [x] [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
-- [x] [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章讲的一般,就是error封装 ,simplize and reduce error handle
-- [x] [What happens with closures running as goroutines?](https://golang.org/doc/faq#closures_and_goroutines) 闭包的传参和值引用问题,这个问题好多次了,不想讲了
-- [x] [Why doesn't my program run faster with more CPUs?](https://golang.org/doc/faq#parallel_slow) switch context at the cost of more cpu
+- [x] 10 [Go data structure](https://research.swtch.com/godata)
+- [x] 11 [Go package 管理路程](https://blog.golang.org/versioning-proposal) 可以作为茶歇读物
+- [x] 12 [Go syntax](https://blog.golang.org/gos-declaration-syntax) go语法表达为什么和C分风格反过来,易读阿!举C例子证明不易读
+- [x] 13 [error-handling-and-go](https://blog.golang.org/error-handling-and-go) 这篇文章讲的一般,就是error封装 ,simplify and reduce error handle
+- [x] 14 [What happens with closures running as goroutines?](https://golang.org/doc/faq#closures_and_goroutines) 闭包的传参和值引用问题,这个问题好多次了,不想讲了
+- [x] 15 [Why doesn't my program run faster with more CPUs?](https://golang.org/doc/faq#parallel_slow) switch context at the cost of more cpu
 --->[concurrent is not parallelism](https://blog.golang.org/concurrency-is-not-parallelism)
-- [x] [How can I control the number of CPUs? ](https://golang.org/doc/faq#number_cpus) use func GOMAXPROCS(n int) int
+- [x] 16[How can I control the number of CPUs? ](https://golang.org/doc/faq#number_cpus) use ```func GOMAXPROCS(n int) int```
 
-[Rethinking Classical Concurrency Patterns](http://bit.ly/2XDt3vT)
-
-
-- [X] [go interview](https://github.com/goquiz/goquiz.github.io) 不错哦 还是有点不错的比如Go启动执行main前干了什么
-- [x] [新手中级常犯的错误](http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/) 
-- [x] [mutex,rwmutex的错误和正确示范](https://hackernoon.com/dancing-with-go-s-mutexes-92407ae927bf) 读写锁,写锁锁住一个变量V的修改,读锁可以对这个变量V加Rlock,Runlock,增加并发度,mutex不像Java一样不是可重入锁,意味着调用内层方法的时候还是需要先解锁的!!
-
-PS: 有些需要编码加深记忆， 有些看看总结。
-
-- [] [go database sql](http://go-database-sql.org/)非常值得一看
-=========================================我是长长的分割线=====================================<br>
+- [X] 17 [go interview](https://goquiz.github.io/) 不错哦 还是有点不错的比如Go启动执行main前干了什么
+- [x] 18 [新手中级常犯的错误](http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/) 
+- [x] 19 [mutex,rwmutex的错误和正确示范](https://hackernoon.com/dancing-with-go-s-mutexes-92407ae927bf) 
+>读写锁,写锁锁住一个变量V的修改,读锁可以对这个变量V加RLock和RUnlock增加并发度，mutex不像Java一样不是可重入锁。
+>意味着调用内层方法的时候还是需要先解锁的!!
+- - -
 :whale2: :whale2: :whale2: 
+####  Map，array，slice，channel，select， 重点了解
 
-- [x] [Go Map设计细节] [①](https://www.jianshu.com/p/aa0d4808cbb8) [②](https://www.cnblogs.com/qcrao-2018/p/10903807.html) 
-> 先说一下设计map的几个key指标 loadFactor=6.5 ,noverflow 判断是否过多的hash collision ,maxKeySize=128 用来编译优化
+---
+[Go Map设计细节] [①](https://www.jianshu.com/p/aa0d4808cbb8) [②](https://www.cnblogs.com/qcrao-2018/p/10903807.html) 
+> 先说一下设计map的几个key指标 loadFactor阀值=6.5 ,noverflow 判断是否过多的hash collision ,maxKeySize=128 用来编译优化连续分配keykey...valuevalue这样子
 整体结构是hmap表示map，bmap表示 新桶buckets数组的一个默认8key/value， oldBuckets旧桶，loadFactor*2^B表示可以最多能容纳的元素个数
 扩容是在map 涉及put和delete操作,整体扩容可以认为是渐进式的过程，跟redis的map设计的类似
 处理冲突是链表法，增加一个bucket节点，每一次collision，都会让noverflow++，用来判断扩容。
 扩容的条件是 oldbucket为nil && （ > loadFactor(6.5) || overflow 过多） ，>6.5说明空间利用率过载了，overflow说明空间利用率太低，hash 冲突严重
 
+---
 数组和切片 [①](https://draveness.me/golang-array-and-slice), [②](https://halfrost.com/go_slice/)
-parseArrayOrSliceType 解析数组或者slcie
-typecheckcomplit 编译器完成静态检查
+数组OR切片的调用顺序链：
+[parseArrayOrSliceType](http://bit.ly/2XnWZg5) 解析数组或者slcie
+[typecheckcomplit](http://bit.ly/2NR8ZUi) 编译器完成静态检查
 1. slice的copy函数, fm.len > to.len 要截断
-2. slice内部表示
-```go
+2. slice对象内部```
 type SliceHeader struct {
-Data uintptr
-Len int
-Cap int
-}
-```
+    Data uintptr
+    Len int
+    Cap int
+}```
 
 3. append，slice扩增策略 [growslice()](http://bit.ly/2CwCRPj)
-只要扩容就是memmove（copy），生成一个新的数组。
+tips:只要扩容就是memmove（copy），生成一个新的数组。
 >如果期望容量大于当前容量的两倍就会使用期望容量；
-如果当前切片容量小于 1024 就会将容量翻倍；
+>如果当前切片容量小于 1024 就会将容量翻倍；
 如果当前切片容量大于 1024 就会每次增加 25% 的容量，直到新容量大于期望容量；
 
-4. slice是延长还是扩容(当从array字面量构建的时候) [点我查看tricky code，辨析slice的扩容本质](https://play.golang.org/p/R1MtaHTxvHA)
+4. slice是延长还是扩容(当从array字面量构建的时候) 
+[点我查看tricky code，辨析slice的扩容本质](https://play.golang.org/p/R1MtaHTxvHA)
+---
 
-- [x] [time递增单调性设计手稿](https://go.googlesource.com/proposal/+/master/design/12914-monotonic.md)
- [davecheney实现的单调时钟](http://bit.ly/32rGiBu)
- 
-> CLOCK_REALTIME CLOCK_MONOTONIC CLOCK_MONOTONIC_RAW CLOCK_BOOTTIME
-CLOCK_REALTIME，就是 「 wall time 」，即是实际的时间。
-CLOCK_MONTONIC，即单调时间，即从某个时间点开始到现在过去的时间。
-用户不能修改这个时间，但是当系统进入休眠 ( suspend ) 时，CLOCK_MONOTONIC 是不会增加的
-CLOCK_MONTONIC 其实就是一个计时器，当电脑开机的时候重新开始计时，当电脑睡眠的时候暂停计时，当电脑关机的时候停止计时
-只不过这个计时器采用的不是 秒为单位，或者通常计时器上的 xx.xx ，而是采用的 CPU 时钟
+字符串拼接： strings.Builder  
 
-timer计时器 需要 及时stop,停止过期 调用after function,[stoptimer源码](http://bit.ly/32yvd1o) 
+会做copycheck,允许byte[] 逃逸到heap，但是不允许 builder对象逃逸。[issue23382](https://github.com/golang/go/issues/23382)
 
+```go 
+//主动扩增计算
+func (b *Builder) grow(n int) {
+	buf := make([]byte, len(b.buf), 2*cap(b.buf)+n)
+	copy(buf, b.buf)
+	b.buf = buf
+}
+```
+默认采用append的扩容机制，
 
-#### go调度
+---
+***time单调递增设计*** 
+因为闰秒的原因，导致cloudfare生产环境DNS解析服务不可用，故重新设计了，核心实现是 sync.runtime_nanotime,一个计数器
 
-- [x] [为什么要采用M:N模型,而不是1:1模型(利用多核,但是上下文切换很慢),N:1(多个user thread可以在1个os thread上快速切换,但是没有利用多核)的原因](https://morsmachine.dk/go-scheduler),就是加了引入一个Process概念 M:P:G = 1:1:N,那么对于M:G来说是1:N模型,对于P:M = 1:1, 不过就是设计的复杂啦
+- [X] [time递增单调性设计手稿](https://go.googlesource.com/proposal/+/master/design/12914-monotonic.md)
+- [X] [dave cheney实现的单调时钟](http://bit.ly/32rGiBu)
+
+参考链接：[LINUX里的4种时钟](http://bit.ly/2qXSOM0)
+> CLOCK_REALTIME CLOCK_MONOTONIC CLOCK_MONOTONIC_RAW CLOCK_BOOTTIME <br>
+CLOCK_REALTIME，就是 「 wall time 」，即是实际的时间。<br>
+CLOCK_MONTONIC，即单调时间，即从某个时间点开始到现在过去的时间。<br>
+用户不能修改这个时间，但是当系统进入休眠 ( suspend ) 时，CLOCK_MONOTONIC 是不会增加的,<br>
+当电脑开机的时候重新开始计时，当电脑睡眠的时候暂停计时，当电脑关机的时候停止计时<br>
+只不过这个计时器采用的不是 秒为单位，或者通常计时器上的 xx.xx ，而是采用的 CPU 时钟<br>
+
+timer计时器 需要 及时stop,防止过期调用after function,[stoptimer源码](http://bit.ly/32yvd1o) 
+
+---
+#### Go scheduler调度
+说明： G代表goroutine，M代表逻辑CPU， P代表Go调度器里G的执行载体
+预读材料：
+- [x] [为什么要采用M\:N模型,而不是1\:1模型(利用多核,但是上下文切换很慢),N\:1(多个user thread可以在1个os thread上快速切换,但是没有利用多核)的原因](https://morsmachine.dk/go-scheduler),
+就是在M和G之间引入一个Process概念 M\:P\:G = 1:1:N,那么对于M\:G来说是，1\:N模型,对于P\:M = 1\:1, 不过就是设计的复杂。
 
 前面解释了原因,下面讲下如何设计这个模型([设计手稿在此](https://morsmachine.dk/go-scheduler)),达到
 1去除signal global mutex
 2 de-centralized 
 3 M 附属的cache 能够 避免1:M模式下,excessive resource consumption. 
-4 M之间hand off 传递G,会导致cache失效啊,最好绑定嘛
+4 M之间hand off 传递G,会导致cache失效,最好绑定
 5 避免worker thread 因 频繁 syscall 造成的block/unblock 
 
 未来可能要设计的: 
@@ -325,12 +268,11 @@ timer计时器 需要 及时stop,停止过期 调用after function,[stoptimer源
 3 增强P对G和M对P的亲缘性, 
 4 引入timer,调节M创建的数量
 
-
-> [Go的 Work Steal模式](https://rakyll.org/scheduler/)
-周期性的从调度计数是61的倍数的话就Global取,否则就无锁的(for cas)从local取,没有的话先从其他P 偷一半g过来,偷不到的话又从Global偷, 再偷不到的话从netPoll偷
-最后从other P偷
-
-[源码链接戳我](http://bit.ly/33uD3KW)
+- [x] [GMP,讲的还可以,稍微了解下G和P的状态](https://draveness.me/golang-goroutine)
+- [x] [Go的 Work Steal模式](https://rakyll.org/scheduler/)
+周期性的从调度计数是61的倍数的话就Global取,否则就无锁的(for cas)从local取,没有的话先从其他P 偷一半g过来，
+偷不到的话又从Global偷，再偷不到的话从netPoll偷，最后从other P偷
+[GMP核心实现 schedule源码](http://bit.ly/33uD3KW)
 ```go
 // 保留核心的调度逻辑,略过无关的GC和trace代码
 func schedule() {
@@ -397,10 +339,18 @@ top:
 	execute(gp, inheritTime)
 }
 ```
-go 关键字(本质上是调用newproc):
-还有一个问题要回答?新建的G分配到上面去,这就需要回答go关键字
-调用go关键字的G和P有自己的Local Queue,满了就放到Global 等到别人调用
-[newproc源码戳](http://bit.ly/34IA3L8)
+[G和P的状态](http://bit.ly/2NY9egB)
+G P M 结构体
+
+
+
+---
+##### go 关键字(本质上是调用newproc):
+
+还有一个问题要回答?  新建的G分配到哪里去？ 这就需要回答go关键字
+调用go关键字实质上是newproc， 生成G的当前P，有自己的Local Queue，满了就放到Global 等到别人调用。
+
+[newproc函数](http://bit.ly/34IA3L8)
 ```go
 func newproc(siz int32, fn *funcval) {
 	argp := add(unsafe.Pointer(&fn), sys.PtrSize)
@@ -458,40 +408,42 @@ if randomizeScheduler && next && fastrand()%2 == 0 {
 }
 ```
 
-- [x] [系统线程抢占式调度](https://studygolang.com/articles/14264) 要遇到的问题  cpu缓存  false share (
-- [x] [go 在 1 create goroutine2  netpoller(异步调用) 3 GC ,4 sys call 需要做调度决策   5 atomic mutex同步调用](https://studygolang.com/articles/15316)
+- [x] [系统线程抢占式调度](https://studygolang.com/articles/14264) 要遇到的问题  cpu缓存 / false share
+- [x] [go 在 1 create goroutine 2  netpoller(异步调用) 3 GC ,4 sys call 需要做调度决策   5 atomic mutex同步调用](https://studygolang.com/articles/15316)
    
-引入P M->P->GQueue 1:1:M, N:M模型. 利用多核以及避免上下文切换,  spin 的 M ,避免 unblock/block ,cpu intense.
+引入P , M->P->G 1:1:M, N:M模型. 利用多核以及避免上下文切换,  spin 的 M ,避免 unblock/block ,cpu intense.
 先理解[Dmitry Vyukov 调度设计原稿](https://docs.google.com/document/d/1TTj4T2JO42uD5ID9e89oa0sLKhJYD0Y_kqxDv3I3XMw/edit)
 >1 single global mutex to protect create complete and reschedule(中心化)
 
->2 goroutine 在 不同的m(worker thread ) 之间hand off goroutine 带来的系统开销
+>2 G 在 不同的m(worker thread ) 之间hand off goroutine 带来的系统开销
 
 >3 M的mcache associate with all M, not just a specific M  running go code, 1:100 ,mcache up to 2m比较昂贵, 以及poor data locality
 
->>4 aggressive thread 频繁的系统调用 unblock/block
+>4 aggressive thread 频繁的系统调用 unblock/block
 
-新版本 引入 P, 去中心化  以及  让每个m 保持负载, 而不至于IDLE , 通过工作窃取模式  lockOSThread  通过自旋spin G 而不是block/unblock,
+总结：新版本 引入 P, 去中心化  以及  让每个m 保持负载, 而不至于IDLE , 通过 1 工作窃取模式  2 lockOSThread  3 通过自旋spin G 而不是block/unblock,
 让每一个P 和 每一个G  execute on last running P和M上面,那样可以可以cache line
 
 
 下面2篇,常识快速阅读,没啥细节可以追究
 - [x] [ardan lab:go schedule 3篇](https://studygolang.com/articles/14264),主要从模型语义上来阐述
 - [x] [Go scheduler:Implementing language with lightweight concurrency](http://bit.ly/2Nur7SC)
-<br>============================我是分割线====================
+
+---
+####go垃圾回收
 
 [go逃逸分析,去除编译inline优化,使用原生的,return指针类型,大对象分配的时候会从stack逃逸到heap](https://studygolang.com/articles/12443)
-<br>=============================我是分割线===================
-####go垃圾回收
-1 对象如何分配 stack还是heap上,如果heap上,对象如何分配,tmalloc方法
 
-内存分配规格
-----16b---------------------32kb---
----mcache---mcentral------mheap----
-stack原生变量,heap 调用返回指针对象,大对象
+1 对象如何分配 stack还是heap上,如果heap上,对象如何分配,tcmalloc方法
+
+heap对象内存分配规格采用（malloc-->tcmalloc和jemalloc）
+<br>----16b----------------------------32kb-----<br>
+<br>---mcache--------mcentral--------mheap----<br>
+
+stack原生变量,heap 调用返回指针对象,大对象（LIFO，数据自动管理和释放。缺点就是占内存）
 
 stack or heap? FAQ
->From a correctness standpoint, you don’t need to know. Each variable in Go exists as long as there are references to it. The storage location chosen by the implementation is irrelevant to the semantics of the language.
+> From a correctness standpoint, you don’t need to know. Each variable in Go exists as long as there are references to it. The storage location chosen by the implementation is irrelevant to the semantics of the language.
  
 > The storage location does have an effect on writing efficient programs. When possible, the Go compilers will allocate variables that are local to a function in that function’s stack frame. However, if the compiler cannot prove that the variable is not referenced after the function returns, then the compiler must allocate the variable on the garbage-collected heap to avoid dangling pointer errors. Also, if a local variable is very large, it might make more sense to store it on the heap rather than the stack.
  
@@ -499,75 +451,101 @@ stack or heap? FAQ
  
  mmap申请虚拟地址,分成三级 mcache(唯一不加锁) <16b, mcentral , mheap(>32kb)
  
- 回收闲置内存的  mcache 给 central 再给heap ,然后free syscall
+ 回收闲置内存的  mcache 给 central 再给heap ,然后free syscall（不是立即释放，只是这块区域不能再用。一般会在5min后释放。这段解释来自于某处源码）
 
-2 对象如何进行三色标记  
-
+2 对象如何进行三色标记：
 三色标记 加 [write barrier](https://golang.org/src/runtime/mbarrier.go)
 [三色标记过程动态阐释](https://making.pusher.com/golangs-real-time-gc-in-theory-and-practice/)
+白-->灰-->黑（完成标记之后又会变成白，进入下一轮）<br>
 
-正如ardan说的一样,GC目前一直在改进,目前是标记清除的 Dijkstra的三色标记,
-加上hybird write barrier(处理 goroutine stack上 black object pointer to white object)
-这篇总结的比较全面,而且给出了很多有用的超链接,正是我想总结的,[戳我](http://legendtkl.com/2017/04/28/golang-gc/)
+正如Ardan说的一样,GC目前一直在改进,目前是标记清除的 Dijkstra的三色标记。
+加上hybrid write barrier（在编译期实现）(消除 STW期间， G stack上 black object pointer to white object)
+[Go的GC](http://legendtkl.com/2017/04/28/golang-gc/)总结的比较全面，而且给出了很多有用的超链接。
+但是GC代码目前已经不太一样了，因为引入了write barrier<br>
+[GC回收入口 gcStart(trigger gcTrigger)](http://bit.ly/32UF423)
 
-4 GC 性能分析工具
+3 [GC性能分析工具](http://bit.ly/2NV7LYo)<br>
 
-- [X] channel底层实现 [①](https://i6448038.github.io/2019/04/11/go-channel/) [②](https://draveness.me/golang/concurrency/golang-channel.html)
+---
+#### Go并发 （ CSP的好处 1 解耦 2 顺序一致性 3 消费者生产者语义明确 4 不需要加锁）
+**重点提示：** 
+>理解顺序: 先理解 GMP调度模型和Go内存模型， 
+以及Go Heap对象的内存分配机制以及GC标记清除+hybrid writer barrier（消除STW期间，stack的black object指向white object对象）
+channel/timer-->select，timer/channel-->context mutex-->once(饥饿/正常状态)，WaitGroup（计数器v,等待者w），
+array-->slice(扩容机制)，
+map（loadFactor(6.5),noverflow,hashgrow(渐进式hash,在put和delete),maxKeySize，以及扩容条件） 
 
-#### Go并发
-1 支持并发的工具 select channel 
-select和channel的实现原理
+[Go memory model](https://golang.org/ref/mem) 
+1 happen before 规则讲述reorder 满足 某种partial order,那么 can read the desired value when write happening
 
-2 同步原语 mutex, once, RWMutex, WaitGroup, Cond, semaphore, singleFlight
-mutex  CAS获取锁 spin (正常锁状态和非饥饿状态下)  ,
-  如果饥饿状态下(等待时间超过1ms)或者不能spin,
- 通过标记位运算判断去判断,以及是否要清楚饥饿状态
- [RWMutex](http://legendtkl.com/2016/10/23/golang-mutex/)
-> 总结的不错:  Mutex 两种工作模式，
-normal 正常模式，starvation 饥饿模式。
-normal 情况下锁的逻辑与老版相似，休眠的 goroutine 以 FIFO 链表形式保存在 sudog 中，
-被唤醒的 goroutine 与新到来活跃的 goroutine 竞解，
-但是很可能会失败。如果一个 goroutine 等待超过 1ms，那么 Mutex 进入饥饿模式
-饥饿模式下，解锁后，锁直接交给 waiter FIFO 链表的第一个，新来的活跃 goroutine 不参与竞争，并放到 FIFO 队尾
-如果当前获得锁的 goroutine 是 FIFO 队尾，或是等待时长小于 1ms，那么退出饥饿模式
-normal 模式下性能是比较好的，但是 starvation 模式能减小长尾 latency
+2 synchronization 规则 
+2.1  init()函数的顺序 
+2.2  goroutine create happen before created goroutine begin execute
+2.3  goroutine exit not guaranteed to happen before any event.if necessary,use lock or channel communication 
 
-[自选条件代码戳我](http://bit.ly/2qEWKRu) ----> 自选次数<4 && p>1 && Local Queue 为空
-- [X] [mutex源码解释的也还不错,可以参考](https://colobu.com/2018/12/18/dive-into-sync-mutex/)
+3  channel communication Each send on a particular channel is matched to a corresponding receive from that channel,
+usually in a **different** goroutine. 
+>tips: 注意 receive 和 send 是different goroutine
 
-[mutex使用场景](https://studygolang.com/articles/12598) 只允许一个G访问临界区比较合适。
-
-once: gmm定义的 Multiple threads can execute once.Do(f) for a particular f, 
-but only one will run f(), and the other calls block until f() has returned.
-
->  // Note: Here is an incorrect implementation of Do:
->  // Note: Here i
 ```go
-if atomic.CompareAndSwapUint32(&o.done, 0, 1) {
- 			f()
+var c = make(chan int, 10)
+var a string
+
+func f() {
+	a = "hello, world"
+	c <- 0
+}
+
+func main() {
+	go f()
+	<-c
+	print(a)
 }
 ```
->  //  Do guarantees that when it returns, f has finished.
-  // This implementation would not implement that guarantee:
-  // given two simultaneous calls, the winner of the cas would
-  // call f, and the second would return immediately, without
-  // waiting for the first's call to f to complete.
-  // This is why the slow path falls back to a mutex, and why
-  // the atomic.StoreUint32 must be delayed until after f returns
 
+> The closing of a channel happens before a receive that returns a zero value because the channel is closed.
 
-- [X] WaitGroup  [①](https://www.cnblogs.com/jiangz222/p/10348763.html) [②](http://bit.ly/33sNTku)
- 
+> In the previous example, replacing c <- 0 with close(c) yields a program with the same guaranteed behavior.
 
- 为什么CSP 1 解耦啊 2 顺序一致性 3 消费者生产者语义明确 4 不需要加锁
- 
- 
-- [x] [cpu 亲缘性](https://www.cnblogs.com/lubinlew/p/cpu_affinity.html),物理CPU,逻辑CPU,进程 bounded to last running Cpu
- 
- > 理解顺序: [channel](https://draveness.me/golang-channel)(hcan entity)
-// hchan struct
-
+高能预警.....
+A receive from an unbuffered channel happens before the send on that channel completes.
+注意是unbuffered channel哦 
+demo如下
 ```go
+var c = make(chan int)
+var a string
+
+func f() {
+	a = "hello, world"
+	<-c
+}
+func main() {
+	go f()
+	c <- 0
+	print(a)
+}
+```
+
+那么接下来,对于buffered channel呢,规则如下
+The **kth** receive on a channel with capacity C happens before the **k+Cth** send from that channel completes
+
+>This rule generalizes the previous rule to buffered channels. It allows a counting semaphore to be modeled by a buffered channel: the number of items in the channel corresponds to the number of active uses, the capacity of the channel corresponds to the maximum number of simultaneous uses, sending an item acquires the semaphore, and receiving an item releases the semaphore. This is a common idiom for limiting concurrency.
+>这段废话讲述的是 可以用buffered channel 构建semaphore 同步工具类.
+
+锁(mutex)和读写锁(mutex)
+对于锁,系铃还需解铃人(反过来了),那么这段话可以很好理解了.
+> For any sync.Mutex or sync.RWMutex variable l and n < m, call n of l.Unlock() happens before call m of l.Lock() returns.
+if m > n, n个unlock happen before 于 lock()
+对于读写锁呢, 除了解锁Happen before加锁之外，还要做到读写互斥，写写互斥和写读互斥。
+
+最后是once,实现方式就是用mutex 和done标记位加上double check实现只做一次function。 <br>
+
+---
+##### channel和select实现原理
+1 支持并发的工具 select channel  
+channel底层实现 [①](https://i6448038.github.io/2019/04/11/go-channel/) [②](https://draveness.me/golang-channel)
+```go
+// channel结构体
 type hchan struct {
 	qcount   uint           // total data in the queue
 	dataqsiz uint           // size of the circular queue
@@ -594,21 +572,21 @@ makechan 根据size=0? 只分配hcan,不分配缓冲区-->不是指针类型,一
 chansend (阻塞还是非阻塞很关键,也是实现channel 语义的全部逻辑实现), 
 很简单. 对于nil channel, channel buffer和 unbuffer 以及 队列未满 队列满了 
 send chan带和不带select都  还是表现出不同的行为的
-分开讨论,
+分开讨论
 
-1   | 2 阻塞的send chan |  3 非阻塞的 send select |  
-:-----------: | :-----------: | :-----------: 
-| nil channel | gopark阻塞 | 返回false |
-| 是不是阻塞|None| 非阻塞 && chan未close &&  (队列满 OR (队列为空&&(没有接受者)) 直接返回false|
-|**加锁阶段**|||
-| closed channel  | panic |  panic |
+1             | 2 阻塞的send chan   |  3 非阻塞的 send select |  
+:-----------: | :----------------: | :---------------------: 
+| nil channel | gopark阻塞         |           返回false      |
+| 是不是阻塞  | None               |非阻塞 && chan未close &&  (队列满 OR (队列为空&&(没有接受者)) 直接返回false|
+|**加锁阶段** |                    |                          |
+| closed channel  |     panic      |          panic          |
 | 如果存在recv G | 直接发给recv,返回true|直接发给recv,返回true|
 | 队列未满|enqueue 缓存区,返回true|enqueue 缓存区,返回true|
 |队列满了,是否阻塞|G入队,阻塞,KeepAlive(ep)|返回true| 
 
 总结:其实很简单,blocked send channel ,阻塞的情况下,在select下直接返回false即可,没有额外的多余动作
 
-[chansend 完整源码戳我](http://bit.ly/34JiTwP)
+[chansend函数](http://bit.ly/34JiTwP)
 ```go
 /*
  * generic single channel send/recv
@@ -685,7 +663,7 @@ func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool {
 		return false
 	}
     // 以上条件都为满足,阻塞的话,就需要将 send G 入列了,并给他赋值相关信息,方便GC和trace
-    // 并keep alive 这个 send G发送的消息Ep,等待 recv G
+    // 并keepAlive 这个 send G发送的消息Ep,等待 recv G
 
 	// Block on the channel. Some receiver will complete our operation for us.
 	gp := getg()
@@ -705,6 +683,7 @@ func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool {
 	// receiver copies it out. The sudog has a pointer to the
 	// stack object, but sudogs aren't considered as roots of the
 	// stack tracer.
+	// 让这个消息存活
 	KeepAlive(ep)
 
 	// someone woke us up.
@@ -713,15 +692,12 @@ func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool {
 }
 
 ```
-
 接收端的处理:
-> 不管是chanrecv1还是chanrecv2,差了bool表达式,最终还是调用chanrecv
-[chanrecv完整源码戳我](http://bit.ly/2pJDgvf)
-
+> 不管是chanrecv1还是chanrecv2,差一个ok bool变量,最终还是调用chanrecv
+[chanrecv完整源码](http://bit.ly/2pJDgvf)
 表格对比暂时不做,就是阻塞的时候他直接返回就是了
-
 ```go
-// 看这段注释就知道怎么回事了
+// 看这段注释就知道怎么回事了  ep是传送的消息
 // chanrecv receives on channel c and writes the received data to ep.
 // ep may be nil, in which case received data is ignored.
 // If block == false and no elements are available, returns (false, false).
@@ -754,7 +730,6 @@ func chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)
 		atomic.Load(&c.closed) == 0 {
 		return
 	}
-	
 
 	lock(&c.lock)
 	if c.closed != 0 && c.qcount == 0 {
@@ -831,32 +806,31 @@ func chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)
 }
 ```
 
- 附:ep 是传送的消息
- ##### Select
-  1. [select的语义](https://segmentfault.com/a/1190000006815341) 
-  2. [select实现原理](https://draveness.me/golang-select.html)
+---
+##### Select
+1. [select的语义](https://segmentfault.com/a/1190000006815341) 
+2. [select实现原理](https://draveness.me/golang-select.html)
 
-协程如何退出: for range , for select + 退出channel return/ ,ok:=chan判断chan是否关闭
+Select底层调用函数实现是在scase struct上。
+编译期间优化函数: [walkselectcases](http://bit.ly/2NWYY6S)
+>我们在这里会分四种情况分别介绍优化的过程和结果<br>
+1 select 中不存在任何的 case<br>
+2 select 中只存在一个 case<br>
+3 select 中存在两个 case，其中一个 case 是 default 语句<br>
+4 通用的 select 条件<br>
 
-Select底层调用的函数 case描述 scase
-编译期间优化: [walkselectcases](http://bit.ly/2NWYY6S)
->我们在这里会分四种情况分别介绍优化的过程和结果
-1 select 中不存在任何的 case；
-2 select 中只存在一个 case；
-3 select 中存在两个 case，其中一个 case 是 default 语句；
-4 通用的 select 条件;
-运行期调用顺序
-> func Select(cases []SelectCase) (chosen int, recv Value, recvOK bool) // value.go 文件
-  func rselect([]runtimeSelect) (chosen int, recvOK bool) //  value.go
-  func reflect_rselect(cases []runtimeSelect) (int, bool) // select.go
-  func selectgo(cas0 *scase, order0 *uint16, ncases int) (int, bool) // select.go文件
-goroutine在select循环中的的唤醒和阻塞,以及case 编译器的优化,优化成if语句.然后运行期对send/receive/nil/default chan的实现
+**运行期调用顺序**
+> func Select(cases []SelectCase) (chosen int, recv Value, recvOK bool) // value.go <br>
+  func rselect([]runtimeSelect) (chosen int, recvOK bool) //  value.go <br>
+  func reflect_rselect(cases []runtimeSelect) (int, bool) // select.go <br>
+  func selectgo(cas0 *scase, order0 *uint16, ncases int) (int, bool) // select.go <br>
+  
+goroutine在select循环中的的唤醒和阻塞，以及case 编译器的优化，优化成if语句。然后运行期对send/receive/nil/default chan的实现
 
- ![select基本逻辑图](http://bit.ly/33wkBSj)
- 
- scase结构体
+ ![select基本逻辑图](http://bit.ly/2Ojpp71)
  
  ```go
+ // scase结构体
  type scase struct {
 	c           *hchan
 	elem        unsafe.Pointer
@@ -871,28 +845,74 @@ const (
 	caseSend
 	caseDefault
 )
-// http://bit.ly/2NWYY6S
-
 ```
+协程如何退出: for range , for select + 退出channel return/ ,ok:=chan判断chan是否关闭<br>
+
+---
+##### 同步原语 mutex, once, RWMutex, WaitGroup, Cond, semaphore, singleFlight
+
+mutex--->once---> WaitGroup(v/w,阻塞和v=0的时候逐个唤醒)
+[能否自旋函数sync_runtime_canSpin](http://bit.ly/2qEWKRu) ----> 自选次数<4 && p>1 && Local Queue 为空
+
+mutex  CAS获取锁 spin (正常锁状态和非饥饿状态下)  ,
+ 如果饥饿状态下(等待时间超过1ms)或者不能spin,通过标记位运算判断去判断,以及是否要清除饥饿状态
  
-  mutex--->once---> WaitGroup(v/w,阻塞和v=0的时候逐个唤醒)
+> 总结的不错:  Mutex 两种工作模式，normal 正常模式，starvation 饥饿模式。<br>
+normal 情况下锁的逻辑与老版相似，休眠的 G 以 FIFO 链表形式保存在 sudog 中，<br>
+被唤醒的 G 与新到来活跃的 G 竞解，但是很可能会失败。如果一个 G 等待超过 1ms，那么 Mutex 进入饥饿模式<br><br>
+饥饿模式下，解锁后，锁直接交给 waiter FIFO 链表的第一个，新来的活跃 G 不参与竞争，并放到 FIFO 队尾<br>
+如果当前获得锁的 G 是 FIFO 队尾，或是等待时长小于 1ms，那么退出饥饿模式<br>
+normal 模式下性能是比较好的，但是 starvation 模式能减小长尾 latency<br>
 
+- [x] [mutex源码解释的也还不错,可以参考](https://colobu.com/2018/12/18/dive-into-sync-mutex/)<br>
+- [x] [mutex使用场景](https://studygolang.com/articles/12598) 只允许一个G访问临界区比较合适。<br>
+- [x] [RWMutex](http://legendtkl.com/2016/10/23/golang-mutex/)<br>
+
+once: gmm定义的 Multiple threads can execute once.Do(f) for a particular f, 
+but only one will run f(), and the other calls block until f() has returned.
+
+>  // Note: Here is an incorrect implementation of Do:
+>  // Note: Here i
+```go
+if atomic.CompareAndSwapUint32(&o.done, 0, 1) {
+ 			f()
+}
+```
+>  //  Do guarantees that when it returns, f has finished.
+  // This implementation would not implement that guarantee:
+  // given two simultaneous calls, the winner of the cas would
+  // call f, and the second would return immediately, without
+  // waiting for the first's call to f to complete.
+  // This is why the slow path falls back to a mutex, and why
+  // the atomic.StoreUint32 must be delayed until after f returns
+
+- [X] WaitGroup[①](https://www.cnblogs.com/jiangz222/p/10348763.html) [②](http://bit.ly/33sNTku) [③](https://draveness.me/golang-sync-primitives)
+> 计数器v（statep高32）和 等待者数量w(statep低32）<br>
+> wait用于阻塞当前G，陷入等待。add(delta）主要是针对v和w 原子性增减，在V=0和w>0的清空下，唤醒。否则，返回OR panic 调用顺序不对，或者并发调用add waite <br>
+
+- [x] [cpu 亲缘性](https://www.cnblogs.com/lubinlew/p/cpu_affinity.html),物理CPU,逻辑CPU,进程 bounded to last running Cpu
 - [x] [Mutex、RWMutex、WaitGroup、Once 和 Cond  ErrGroup、Semaphore和 SingleFlight](https://draveness.me/golang-sync-primitives)
-
+condition,wait是构建双链表，signal/broadcast 依次 等待最久（ticket）的最先唤醒。
 - [x] [Go定时器 Timer](https://draveness.me/golang-timer)
-  > timer对象 根据pid,在64个分桶上找到自己的位置,然后,根据pid 定位timersBuckets(是个四叉堆),然后append) timer和ticker区别就是多了个period 以及在函数[timerproc](http://bit.ly/36Pib2Y)调用(2层for循环) 多了一层对period的处理,将他计算when,然后将heap index = 0 ,remove掉. timerbucket是一个四叉堆, 逻辑还是很简单的,到期的从堆顶(index=0)移除即可,最后出发调用sendtime或者 f function.
-                               
-- [x] Context包 [①](https://draveness.me/golang-context ) [②](https://www.cnblogs.com/qcrao-2018/p/11007503.html) [③官方blog context](https://blog.golang.org/context)
+  > timer对象 根据pid,在64个分桶上找到自己的位置,然后,根据pid 定位timersBuckets(是个四叉堆),
+  > 然后append) timer和ticker区别就是多了个period 以及在函数[timerproc](http://bit.ly/36Pib2Y)调用(2层for循环)
+  > 多了一层对period的处理,将他计算when,然后将heap index = 0 ,remove掉. 
+  > timerbucket是一个四叉堆, 逻辑还是很简单的,到期的从堆顶(index=0)移除即可,调用[sendtime](http://bit.ly/2NRNAdM)OR 自定义的f function.                              
+- [x] Context包 [①](https://draveness.me/golang-context) [②](https://www.cnblogs.com/qcrao-2018/p/11007503.html) [③官方blog context](https://blog.golang.org/context)
   总结:
-  propagateCancel  1 done 是否Nil 2 err是否 nil 3 新建一个G 监听paren done channel, 并调用函数cancelCtx取消 close(done) 4 如果是定时的或者周期性的,cancelCtx赋值给timer f,有她负责取消 
-  
+  [propagateCancel](http://bit.ly/2KJclqL)  
+  主要逻辑：<br>
+  1 parent done 是否Nil <br>
+  2 err是否 nil <br>
+  3 新建一个G 监听parent done channel, 并调用函数cancelCtx取消 close(done) <br>
+  4 如果是定时的或者周期性的，cancelCtx赋值给timer f,由他负责取消。 <br>
+- [x] [sync.pool 临时对象复用池](https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277)
+会参与GC，所以是临时对象复用池，找不到就创建了
+取用旧对象顺序：private-->shared(g-p) -->other shared(for+cas)--->victim cache。<br>
 
-- [x] [sync.pool 临时对象复用池](https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277) 
-private-->shared(g-p) -->other shared(for+cas)--->victim cache
-
-new 
-
-#### MISC
-[GMP,讲的还可以,稍微了解下G和P的状态](https://draveness.me/golang-goroutine)
-
-###以后再回来看看
+---
+- [ ] [go database sql](http://go-database-sql.org/) 非常值得一看
+- [ ] [Rethinking Classical Concurrency Patterns](http://bit.ly/2XDt3vT)
+---
+环境信息： go version go1.13.4 darwin/amd64
+创作更新时间： 2019-11-17
