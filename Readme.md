@@ -1,12 +1,11 @@
 ### 保持对Go的enthusiasm :bulb:
 
 引言：
-关于取名，为什么取这么一个俗气的名字呢，因为我是51自学网（手）著（动）名（滑）学（稽）员
+关于取名，为什么取这么一个俗气的名字呢，因为我是51自学网（手）著（动）名（滑）学（稽）员<br>
 enthusiasm definition: a thing that arouses feelings of intense and eager enjoyment.
 
 :bulb::seedling::bike::cn:
-目标: 夯实基础，学习更多的Go语言特性
-
+目标: 夯实基础，学习更多的Go语言特性<br>
 1. 关注Gopheracdemy Ardanlabs 以及GCTT（Go国内翻译小组挑选的文章）
 
 2. 学习Go wiki里面的东西
@@ -263,7 +262,7 @@ timer计时器 需要 及时stop,防止过期调用after function,[stoptimer源�
 5 避免worker thread 因 频繁 syscall 造成的block/unblock 
 
 未来可能要设计的: 
-1 LIFO 来增强locality,在兼顾fairness情况下 
+1 LIFO 来增强locality,并兼顾fairness 
 2 如果G创建了,不给他分配stack,这样创建成本就比较小了 
 3 增强P对G和M对P的亲缘性, 
 4 引入timer,调节M创建的数量
@@ -584,7 +583,7 @@ send chan带和不带select都  还是表现出不同的行为的
 | 队列未满|enqueue 缓存区,返回true|enqueue 缓存区,返回true|
 |队列满了,是否阻塞|G入队,阻塞,KeepAlive(ep)|返回true| 
 
-总结:其实很简单,blocked send channel ,阻塞的情况下,在select下直接返回false即可,没有额外的多余动作
+总结:其实很简单,blocked send channel ,阻塞下,在select下直接返回false即可,没有额外的多余动作
 
 [chansend函数](http://bit.ly/34JiTwP)
 ```go
@@ -813,7 +812,7 @@ func chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)
 
 Select底层调用函数实现是在scase struct上。
 编译期间优化函数: [walkselectcases](http://bit.ly/2NWYY6S)
->我们在这里会分四种情况分别介绍优化的过程和结果<br>
+>我们在这里会分四种，分别介绍优化的过程和结果<br>
 1 select 中不存在任何的 case<br>
 2 select 中只存在一个 case<br>
 3 select 中存在两个 case，其中一个 case 是 default 语句<br>
@@ -858,7 +857,7 @@ mutex  CAS获取锁 spin (正常锁状态和非饥饿状态下)  ,
  如果饥饿状态下(等待时间超过1ms)或者不能spin,通过标记位运算判断去判断,以及是否要清除饥饿状态
  
 > 总结的不错:  Mutex 两种工作模式，normal 正常模式，starvation 饥饿模式。<br>
-normal 情况下锁的逻辑与老版相似，休眠的 G 以 FIFO 链表形式保存在 sudog 中，<br>
+normal 下锁的逻辑与老版相似，休眠的 G 以 FIFO 链表形式保存在 sudog 中，<br>
 被唤醒的 G 与新到来活跃的 G 竞解，但是很可能会失败。如果一个 G 等待超过 1ms，那么 Mutex 进入饥饿模式<br><br>
 饥饿模式下，解锁后，锁直接交给 waiter FIFO 链表的第一个，新来的活跃 G 不参与竞争，并放到 FIFO 队尾<br>
 如果当前获得锁的 G 是 FIFO 队尾，或是等待时长小于 1ms，那么退出饥饿模式<br>
@@ -888,7 +887,7 @@ if atomic.CompareAndSwapUint32(&o.done, 0, 1) {
 
 - [X] WaitGroup[①](https://www.cnblogs.com/jiangz222/p/10348763.html) [②](http://bit.ly/33sNTku) [③](https://draveness.me/golang-sync-primitives)
 > 计数器v（statep高32）和 等待者数量w(statep低32）<br>
-> wait用于阻塞当前G，陷入等待。add(delta）主要是针对v和w 原子性增减，在V=0和w>0的清空下，唤醒。否则，返回OR panic 调用顺序不对，或者并发调用add waite <br>
+> wait用于阻塞当前G，陷入等待。add(delta）主要是针对v和w 原子性增减，在V=0和w>0下，唤醒。否则，返回OR panic 调用顺序不对，或者并发调用add waite <br>
 
 - [x] [cpu 亲缘性](https://www.cnblogs.com/lubinlew/p/cpu_affinity.html),物理CPU,逻辑CPU,进程 bounded to last running Cpu
 - [x] [Mutex、RWMutex、WaitGroup、Once 和 Cond  ErrGroup、Semaphore和 SingleFlight](https://draveness.me/golang-sync-primitives)
@@ -905,14 +904,16 @@ condition,wait是构建双链表，signal/broadcast 依次 等待最久（ticket
   1 parent done 是否Nil <br>
   2 err是否 nil <br>
   3 新建一个G 监听parent done channel, 并调用函数cancelCtx取消 close(done) <br>
-  4 如果是定时的或者周期性的，cancelCtx赋值给timer f,由他负责取消。 <br>
 - [x] [sync.pool 临时对象复用池](https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277)
 会参与GC，所以是临时对象复用池，找不到就创建了
 取用旧对象顺序：private-->shared(g-p) -->other shared(for+cas)--->victim cache。<br>
-
+  4 如果是定时的或者周期性的，cancelCtx赋值给timer f,由他负责取消。 <br>
+https://callistaenterprise.se/blogg/teknik/2019/10/05/go-worker-cancellation/
 ---
 - [ ] [go database sql](http://go-database-sql.org/) 非常值得一看
-- [ ] [Rethinking Classical Concurrency Patterns](http://bit.ly/2XDt3vT)
+- [ ] [Rethinking Classical Concurrency Patterns](http://bit.ly/2r1H2QE),[talks slide pdf](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view?usp=sharing),[talk video here](https://youtu.be/5zXAHh5tJqQ)
 ---
+
+https://youtu.be/nok0aYiGiYA
 环境信息： go version go1.13.4 darwin/amd64
 创作更新时间： 2019-11-17

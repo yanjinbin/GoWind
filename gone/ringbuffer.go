@@ -1,6 +1,9 @@
 package gone
 
+// 另一个版本 https://benx.io/2017/09/19/ring-buffer/
+
 // 初版  问题出在 full 和 empty怎么判定呢 http://bit.ly/2KiKjlr
+// 最终版
 var Read int
 var Write int
 var array [100]int
@@ -78,5 +81,3 @@ func Empty_1() bool {
 func size_1() int {
 	return length
 }
-
-// 最终版
