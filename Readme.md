@@ -245,7 +245,34 @@ CLOCK_MONTONIC，即单调时间，即从某个时间点开始到现在过去的
 当电脑开机的时候重新开始计时，当电脑睡眠的时候暂停计时，当电脑关机的时候停止计时<br>
 只不过这个计时器采用的不是 秒为单位，或者通常计时器上的 xx.xx ，而是采用的 CPU 时钟<br>
 
-timer计时器 需要 及时stop,防止过期调用after function,[stoptimer源码](http://bit.ly/32yvd1o) 
+~~timer计时器 需要 [及时stop](http://bit.ly/38Do1nL), [stoptimer源码](http://bit.ly/32yvd1o)~~
+
+![timer 1.14最新底层设计](http://bit.ly/3cKeDlL),
+所有的计时器都以最小四叉堆的形式存储在处理器 runtime.p 中。
+```go
+ type p struct {
+	...
+	timersLock mutex //用于保护计时器的互斥锁；
+	timers []*timer // 0based index 最小四叉堆
+
+	numTimers     uint32 //处理器中的计时器数量
+	adjustTimers  uint32 //处理器中处于 timerModifiedEarlier 状态的计时器数量；
+	deletedTimers uint32 //处理器中处于 timerDeleted 状态的计时器数量；
+	...
+}
+//运行计时器
+// runtime.runtimer 函数会检查处理器四叉堆上最顶上的计时器，该函数也会处理计时器的删除以及计时器时间的更新，它会遵循以下的规则处理计时器：
+func runtimer(pp *p, now int64) int64 {}
+//runtime.checkTimers 是调度器用来运行处理器中计时器的函数，它会在发生以下情况时被调用：
+  // 调度器调用 runtime.schedule 执行调度时；
+ // 调度器调用 runtime.findrunnable 获取可执行的 Goroutine 时；
+ // 调度器调用 runtime.findrunnable 从其他处理器窃取计时器时；
+func checkTimers(pp *p, now int64) (rnow, pollUntil int64, ran bool) {}
+// 不重要
+// 系统监控
+// 系统监控函数 runtime.sysmon 也可能会触发函数的计时器，下面的代码片段中省略了大量与计时器无关的代码：
+
+```
 
 ---
 #### Go scheduler调度
@@ -459,6 +486,7 @@ stack or heap? FAQ
 
 正如Ardan说的一样,GC目前一直在改进,目前是标记清除的 Dijkstra的三色标记。
 加上hybrid write barrier（在编译期实现）(消除 STW期间， G stack上 black object pointer to white object)
+
 [Go的GC](http://legendtkl.com/2017/04/28/golang-gc/)总结的比较全面，而且给出了很多有用的超链接。
 但是GC代码目前已经不太一样了，因为引入了write barrier<br>
 [GC回收入口 gcStart(trigger gcTrigger)](http://bit.ly/32UF423)
@@ -509,6 +537,7 @@ func main() {
 高能预警.....
 A receive from an unbuffered channel happens before the send on that channel completes.
 注意是unbuffered channel哦 
+
 demo如下
 ```go
 var c = make(chan int)
