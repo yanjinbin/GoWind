@@ -50,6 +50,8 @@ func Defer() {
 	fmt.Println("defer 返回值")
 	release()
 	releaseNew()
+	//
+
 
 }
 

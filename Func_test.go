@@ -25,7 +25,7 @@ func TestStr(t *testing.T) {
 	fmt.Printf("\n")
 	sdk.PrintChars(name1)
 	fmt.Printf("\n")
-	sdk.PrintChars(name2)
+	sdk.PrintChars(noame2)
 	fmt.Printf("\nrune可以用来处理utf8占据2个字节的单字符\n")
 	sdk.PrintRune(name1)
 	fmt.Printf("\n")

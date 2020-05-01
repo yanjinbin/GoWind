@@ -186,12 +186,13 @@ Miscellaneous
 ####  Map，array，slice，channel，select， 重点了解
 
 ---
-[Go Map设计细节] [①](https://www.jianshu.com/p/aa0d4808cbb8) [②](https://www.cnblogs.com/qcrao-2018/p/10903807.html) 
+[Go Map设计细节][①](https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-hashmap/) [②](https://www.jianshu.com/p/aa0d4808cbb8) [③](https://www.cnblogs.com/qcrao-2018/p/10903807.html) 
 > 先说一下设计map的几个key指标 loadFactor阀值=6.5 ,noverflow 判断是否过多的hash collision ,maxKeySize=128 用来编译优化连续分配keykey...valuevalue这样子
 整体结构是hmap表示map，bmap表示 新桶buckets数组的一个默认8key/value， oldBuckets旧桶，loadFactor*2^B表示可以最多能容纳的元素个数
 扩容是在map 涉及put和delete操作,整体扩容可以认为是渐进式的过程，跟redis的map设计的类似
 处理冲突是链表法，增加一个bucket节点，每一次collision，都会让noverflow++，用来判断扩容。
 扩容的条件是 oldbucket为nil && （ > loadFactor(6.5) || overflow 过多） ，>6.5说明空间利用率过载了，overflow说明空间利用率太低，hash 冲突严重
+
 
 ---
 数组和切片 [①](https://draveness.me/golang-array-and-slice), [②](https://halfrost.com/go_slice/)
@@ -921,28 +922,38 @@ if atomic.CompareAndSwapUint32(&o.done, 0, 1) {
 - [x] [cpu 亲缘性](https://www.cnblogs.com/lubinlew/p/cpu_affinity.html),物理CPU,逻辑CPU,进程 bounded to last running Cpu
 - [x] [Mutex、RWMutex、WaitGroup、Once 和 Cond  ErrGroup、Semaphore和 SingleFlight](https://draveness.me/golang-sync-primitives)
 condition,wait是构建双链表，signal/broadcast 依次 等待最久（ticket）的最先唤醒。
+
 - [x] [Go定时器 Timer](https://draveness.me/golang-timer)
   > timer对象 根据pid,在64个分桶上找到自己的位置,然后,根据pid 定位timersBuckets(是个四叉堆),
   > 然后append) timer和ticker区别就是多了个period 以及在函数[timerproc](http://bit.ly/36Pib2Y)调用(2层for循环)
   > 多了一层对period的处理,将他计算when,然后将heap index = 0 ,remove掉. 
   > timerbucket是一个四叉堆, 逻辑还是很简单的,到期的从堆顶(index=0)移除即可,调用[sendtime](http://bit.ly/2NRNAdM)OR 自定义的f function.                              
 - [x] Context包 [①](https://draveness.me/golang-context) [②](https://www.cnblogs.com/qcrao-2018/p/11007503.html) [③官方blog context](https://blog.golang.org/context)
-  总结:
+  ~~总结~~:
   [propagateCancel](http://bit.ly/2KJclqL)  
   主要逻辑：<br>
-  1 parent done 是否Nil <br>
-  2 err是否 nil <br>
-  3 新建一个G 监听parent done channel, 并调用函数cancelCtx取消 close(done) <br>
+  1 parent done 是否Nil。<br>
+  2 err是否 nil。<br>
+  3 新建一个G 监听parent done channel, 并调用函数cancelCtx取消 close(done)。<br>
+  4 如果是定时的或者周期性的，cancelCtx赋值给timer f,由他负责取消。<br>
+  
 - [x] [sync.pool 临时对象复用池](https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277)
 会参与GC，所以是临时对象复用池，找不到就创建了
 取用旧对象顺序：private-->shared(g-p) -->other shared(for+cas)--->victim cache。<br>
-  4 如果是定时的或者周期性的，cancelCtx赋值给timer f,由他负责取消。 <br>
-https://callistaenterprise.se/blogg/teknik/2019/10/05/go-worker-cancellation/
+
 ---
-- [ ] [go database sql](http://go-database-sql.org/) 非常值得一看
+- [ ] 调度器/网络轮询器/系统监控    内存管理:内存分配器/垃圾收集器/栈内存管理
+- [ ] [Go优雅关闭worker](http://bit.ly/2KBX2jd)
+- [X] [go database sql](http://go-database-sql.org/) 非常值得一看
+>首先设计核心是做了统一接入/访问层 access layer，去接入各种各种的数据库.<br>
+核心API scan 去做 convert 把 byte[] 转换成各种各种的数据类型<br>
+永远要 defer row.close()<br>
+处理null数据，未知的columns ，以及单条/多条查询，还有 事务支持<br>
+连接池参数设置<br>
+并没有讲antipattern <br>
+
 - [ ] [Rethinking Classical Concurrency Patterns](http://bit.ly/2r1H2QE),[talks slide pdf](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view?usp=sharing),[talk video here](https://youtu.be/5zXAHh5tJqQ)
 ---
 
-https://youtu.be/nok0aYiGiYA
-环境信息： go version go1.13.4 darwin/amd64
-创作更新时间： 2019-11-17
+环境信息： go version go1.14 darwin/amd64
+创作更新时间： 2020-03-30

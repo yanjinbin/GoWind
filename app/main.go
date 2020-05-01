@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 /*func main() {
@@ -94,7 +95,7 @@ func main() {
 		}
 	}
 	wg.Wait()
-	//time.Sleep(20*time.Second)
+	time.Sleep(20*time.Second)
 
 }
 
